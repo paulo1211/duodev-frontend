@@ -1,0 +1,15 @@
+services:
+  duodev-frontend:
+    container_name: duodev-frontend
+    image: duodev-frontend:0.0.1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - duodev-network
+  
+networks:
+  duodev-network:
+    external: true
