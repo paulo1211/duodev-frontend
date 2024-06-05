@@ -11,35 +11,33 @@
 </head>
 <body>
     <div id="divForm">
-        <h2 id="tituloLogin">Crie sua conta</h2>
+        <h2 id="tituloCad">Crie sua conta</h2>
         <div id="divCentralCadImg">
             <img src="logoDuoDev.png" id="imgLogo" alt="Logo DuoDev">
             <div id="divCentralCad">
-                <input type="text" class="inputUsuario" placeholder="Nome completo" name="inputNome">
-                <input type="text" class="inputUsuario" placeholder="Email" name="inputEmail">
-                <input type="password" class="inputUsuario" placeholder="Senha" name="inputSenha">
-                <input type="text" class="inputUsuario" placeholder="CPF" name="inputCPF">
-                <select class="inputUsuario" name="selectGen" id="selectGenero">
-                    <option value="Cis" class="optSel">Cis</option>
+                <input type="text" class="inputUsuario" placeholder="Nome completo" id="inputNome">
+                <input type="text" class="inputUsuario" placeholder="Email" id="inputEmail">
+                <input type="password" class="inputUsuario" placeholder="Senha" id="inputSenha">
+                <input type="password" class="inputUsuario" placeholder="Confirmar senha" id="inputConfSenha">
+                <input type="text" class="inputUsuario" placeholder="CPF" id="inputCPF">
+                <select class="inputUsuario" id="selectGenero">
+                    <option value="CisH" class="optSel">Homem Cis</option>
+                    <option value="CisM" class="optSel">Mulher Cis</option>
                     <option value="Trans" class="optSel">Trans</option>
                     <option value="NaoBinario" class="optSel">Não-binário</option>
                     <option value="Fluido" class="optSel">Fluido</option>
                     <option value="Bigenero" class="optSel">Bigênero</option>
                     <option value="Outro" class="optSel">Outro</option>
                 </select>
-                <div id="perfil">
-                    <label for="checkboxMentor" class="labels">Mentor</label>
-                    <input type="checkbox" name="checkboxMentor" class="checkPerfil">
-                    <label for="checkboxMentorado" class="labels">Mentorado</label>
-                    <input type="checkbox" name="checkboxMentorado" class="checkPerfil">
-                </div>
-                
-                <button id="btnLogin" type="submit">INSCREVER-SE</button>
+                <select class="inputUsuario" id="selectPerfil">
+                    <option value="Mentor" class="optSel">Mentor(a)</option>
+                    <option value="Mentorado" class="optSel">Aluno(a)</option>
+                    <option value="Ambos" class="optSel">Ambos</option>
+                </select>
+                <button id="btnLogin" type="button">CADASTRAR-SE</button>
             </div> 
         </div>
-        
-        
     </div>
-    
+    <script src="script.js"></script>
 </body>
 </html>
