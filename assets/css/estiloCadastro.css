@@ -1,0 +1,128 @@
+body {
+    margin: 0;
+    background-color: #0a4060;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+    font-family: "Rubik", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: bold;
+    font-style: normal;
+}
+
+#divForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 50px 0;
+    padding: 20px 60px 20px 10px;
+    background-color: #eaf0f8;
+    box-shadow: 0 5px 40px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+}
+
+#tituloCad {
+    margin: 20px 0 0 50px;
+    color: #0a4060;
+    align-self: center;
+}
+
+#divCentralCadImg {
+    display: flex;
+    flex-direction: row;
+}
+
+#divCentralCad {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 40px 0;
+}
+
+#imgLogo {
+    height: 300px;
+    width: 300px;
+    margin: 0 0 20px 0;
+    align-self: center;
+}
+
+.labels {
+    align-self: flex-start;
+    font-size: medium;
+    margin: 0;
+    color: #0a4060;
+}
+
+#selectGenero, .inputUsuario {
+    width: 100%;
+}
+
+.inputGeral {
+    width: 100%;
+    background-color: white;
+    font-family: "Rubik", sans-serif;
+    font-weight: bold;
+    font-size: small;
+    color: #0a4060;
+    border: 2px solid #0a4060;
+    margin: 10px 0;
+    padding: 7px;
+    outline: none;
+    box-shadow: 0px 2px 5px rgb(0, 0, 0, 0.5);
+    border-radius: 10px;
+}
+
+.inputGeral:focus, .inputGeral:hover {
+    border: 2px solid #17d7da;
+}
+
+.inputInvalidado {
+    border-color: red;
+}
+
+.inputUsuario::placeholder {
+    color: #0a4060;
+    background-color: white;
+}
+
+.optSel {
+    background-color: #eaf0f8;
+}
+
+#btnLogin {
+    width: 80%;
+    margin-top: 30px;
+    color: white;
+    font-weight: bolder;
+    background: linear-gradient(90deg, #0a4060, #17d7da);
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+}
+
+#btnLogin:hover {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 1);
+}
+
+@media (max-width: 768px) {
+    #divForm {
+        padding: 20px 10px;
+    }
+
+    #tituloCad {
+        margin: 20px 0;
+    }
+
+    #imgLogo {
+        height: 200px;
+        width: 200px;
+    }
+
+    #btnLogin {
+        width: 100%;
+    }
+}
