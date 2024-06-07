@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro DuoDev</title>
+    <link rel="stylesheet" href="assets/css/estiloCadastro.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="divForm">
+        <h2 id="tituloCad">Crie sua conta</h2>
+        <div id="divCentralCadImg">
+            <img src="assets/img/logoDuoDev.png" id="imgLogo" alt="Logo DuoDev">
+            <div id="divCentralCad">
+                <input type="text" class="inputGeral" placeholder="Nome completo" id="inputNome">
+                <input type="text" class="inputGeral" placeholder="Email" id="inputEmail">
+                <input type="date" class="inputGeral" placeholder="Data de Nascimento" id="inputDataNascimento">
+                <input type="password" class="inputGeral" placeholder="Senha" id="inputSenha">
+                <input type="password" class="inputGeral" placeholder="Confirmar senha" id="inputConfSenha">
+                <input type="text" class="inputGeral" placeholder="CPF" id="inputCPF">
+                <select class="inputGeral" id="selectGenero">
+                    <option value="" class="optSel">Selecione seu gênero</option>
+                    <option value="CisH" class="optSel">Homem Cis</option>
+                    <option value="CisM" class="optSel">Mulher Cis</option>
+                    <option value="TransH" class="optSel">Homem Trans</option>
+                    <option value="TransM" class="optSel">Mulher Trans</option>
+                    <option value="NaoBinario" class="optSel">Não-binário</option>
+                    <option value="GeneroFluido" class="optSel">Gênero Fluido</option>
+                    <option value="Bigenero" class="optSel">Bigênero</option>
+                    <option value="Agenero" class="optSel">Agênero</option>
+                    <option value="Outro" class="optSel">Outro</option>
+                    <option value="PrefiroNaoInformar" class="optSel">
+                      Prefiro não informar
+                    </option>
+                </select>
+                <select class="inputGeral" id="selectPerfil">
+                    <option value="Mentor" class="optSel">Mentor(a)</option>
+                    <option value="Mentorado" class="optSel">Aluno(a)</option>
+                    <option value="Ambos" class="optSel">Ambos</option>
+                </select>
+                <button id="btnLogin" type="button">CADASTRAR-SE</button>
+            </div> 
+        </div>
+    </div>
+    <script src="assets/js/scriptCadastro.js"></script>
+</body>
+</html>

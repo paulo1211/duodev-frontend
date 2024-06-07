@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login DuoDev</title>
+    <link rel="stylesheet" href="assets/css/estiloLogin.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="divForm">
+        <h2 id="tituloLogin">Bem vindo(a)</h2>
+        <img src="assets/img/logoDuoDev.png" id="imgLogo" alt="Logo DuoDev">
+        <input type="text" class="inputGeral" placeholder="Email" name="inputUsuario" id="inputEmailLogin">
+        <input type="password" class="inputGeral" placeholder="Senha" name="inputSenha" id="inputSenhaLogin">
+        <button class="btnGeral btnLogin" id="btnFazLogin">ENTRAR</button>
+        <a href="#" id="esqSenha">Esqueci minha senha</a>
+
+        <div id="cad">
+            <span>Ainda não possui cadastro?</span>
+            <a href="indexCadastro.html">Cadastre-se</a>
+        </div>
+        
+    </div>
+
+    <div id="modalEsqSenha" class="modal">
+        <div class="modal-content">
+            <div id="conteudoDeafultModal">
+                <span class="close" id="btnFechar">&times;</span>
+                <h2 id="tituloModal">Recuperar senha</h2>
+                <input type="email" placeholder="exemplo@exemplo.com" class="inputGeral" id="inputEmail">
+                <button class="btnGeral" id="btnGerarEmail">ENVIAR EMAIL</button>
+                <a id="msg"></a>
+            </div>
+            
+            
+            <div id="soApareceQuandoMandarEmail">
+                <span class="close" id="btnFechar">&times;</span>
+                <h2 id="tituloModal">Verifique o código</h2>
+                <input type="text" class="inputGeral" id="inputCodVer" placeholder="Código de verificação">
+                <button class="btnGeral" id="btnVerCod">VERIFICAR</button>
+                <a id="msg"></a>
+            </div>
+            <div id="soApareceQuandoVerificarOCodigo">
+                <span class="close" id="btnFechar">&times;</span>
+                <h2 id="tituloModal">Redefina sua senha</h2>
+                <input type="password" class="inputGeral" placeholder="Nova Senha" name="inputSenha">
+                <input type="password" class="inputGeral" placeholder="Confirmar Nova Senha" name="inputSenha">
+                <button class="btnGeral" id="btnEsqSenha">REDEFINIR</button>
+                <a id="msg"></a>
+            </div>
+
+            </div>
+        </div>
+
+    </div>
+    
+</body>
+<script src="assets/js/scriptLogin.js"></script>
+</html>
