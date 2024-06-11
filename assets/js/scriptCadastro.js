@@ -111,9 +111,34 @@ document.addEventListener('DOMContentLoaded', function() {
             let genero = document.getElementById('selectGenero').value;
             let perfil = document.getElementById('selectPerfil').value;
             let dataNascimento = document.getElementById('inputDataNascimento').value;
-            console.log(document.getElementById("inputDataNascimento").value);
-            window.location.href = '';
-        }else{
+
+            // Endpoint de cadastro (comentado)
+            // fetch('/cadastro', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify({
+            //         nome,
+            //         email,
+            //         senha,
+            //         confirmarSenha,
+            //         cpf,
+            //         genero,
+            //         perfil,
+            //         dataNascimento
+            //     })
+            // })
+            // .then(response => response.json())
+            // .then(data => {
+            //     console.log(data);
+            // })
+            // .catch(error => {
+            //     console.error('Erro ao cadastrar:', error);
+            // });
+
+            console.log('Formulário válido. Enviando dados para o servidor...');
+        } else {
             alert("Algum campo ou alguns campos não foram preenchidos corretamente.")
         }
     });

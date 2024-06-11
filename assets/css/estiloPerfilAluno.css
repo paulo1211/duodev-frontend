@@ -309,34 +309,22 @@ button.encerrar {
     display: none;
 }
 
-.carrossel {
-    display: flex;
-    overflow: hidden;
-    gap: 20px;
-    padding: 20px;
+.listaCards { 
+    display: flex; 
+    flex-wrap: wrap; 
 }
-
 .card {
-    background: #fff;
-    border: 1px solid #ccc;
+    border: 3px solid #0a4060;
+    padding: 16px;
+    margin: 8px;
+    width: 80%;
     border-radius: 10px;
-    padding: 20px;
-    min-width: 200px;
-    text-align: center;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
 }
 
-.card img.avatar {
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    margin-bottom: 10px;
-}
-
-.card h3 {
-    margin: 10px 0;
-}
-
-.card p {
-    margin: 5px 0;
+.card a{
+    font-size: small;
 }

@@ -3,8 +3,11 @@ document.addEventListener('DOMContentLoaded', function() {
     var modal = document.getElementById('modalEsqSenha');
     var btnEmail = document.getElementById('btnGerarEmail');
     var btnCod = document.getElementById('btnVerCod');
+    var btnRedefinir = document.getElementById('btnEsqSenha');
     var inputCod = document.getElementById('inputCodVer');
-    var cod = "1234";
+    var inputNovaSenha = document.getElementById('inputNovaSenha');
+    var inputConfirmarSenha = document.getElementById('inputConfirmarSenha');
+    var cod = "1234"; // Este código seria gerado e enviado pelo backend
     var closeBtns = document.querySelectorAll('.close');
 
     function abrirModalEsqSenha() {
@@ -71,6 +74,31 @@ document.addEventListener('DOMContentLoaded', function() {
     btnEmail.addEventListener("click", async function() {
         let email = document.getElementById('inputEmail').value;
         if (validarEmail(email)) {
+            // Enviar código de verificação para o email
+            /*
+            fetch('/api/enviarCodigo', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email: email })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById("msg").textContent = "Código enviado para o email";
+                    await pausa(3000);
+                    document.getElementById("soApareceQuandoMandarEmail").style.display = "flex";
+                    document.getElementById("conteudoDeafultModal").style.display = "none";
+                } else {
+                    document.getElementById("msg").textContent = "Erro ao enviar código";
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                document.getElementById("msg").textContent = "Erro ao enviar código";
+            });
+            */
             document.getElementById("msg").textContent = "Código enviado para o email";
             await pausa(3000);
             document.getElementById("soApareceQuandoMandarEmail").style.display = "flex";
@@ -80,18 +108,73 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    btnRedefinir.addEventListener("click", async function() {
+        let novaSenha = inputNovaSenha.value;
+        let confirmarSenha = inputConfirmarSenha.value;
+
+        if (novaSenha === confirmarSenha && novaSenha.length > 5) {
+            // Redefinir a senha no backend
+            /*
+            fetch('/api/redefinirSenha', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ novaSenha: novaSenha })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById("msgRedefinir").textContent = "Senha redefinida com sucesso";
+                    await pausa(3000);
+                    closeModal();
+                } else {
+                    document.getElementById("msgRedefinir").textContent = "Erro ao redefinir a senha";
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                document.getElementById("msgRedefinir").textContent = "Erro ao redefinir a senha";
+            });
+            */
+            document.getElementById("msgRedefinir").textContent = "Senha redefinida com sucesso";
+            await pausa(3000);
+            closeModal();
+        } else {
+            document.getElementById("msgRedefinir").textContent = "Senhas não coincidem ou são inválidas";
+        }
+    });
+
     document.getElementById("btnFazLogin").addEventListener("click", function() {
         var emailLogin = document.getElementById("inputEmailLogin").value;
         var senhaLogin = document.getElementById("inputSenhaLogin").value;
 
-
-
         if(validarEmail(emailLogin)) {
+            // Autenticação do usuário
+            /*
+            fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email: emailLogin, senha: senhaLogin })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = "perfil.html";
+                } else {
+                    alert("Email ou senha incorretos");
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                alert("Erro ao fazer login");
+            });
+            */
             window.location.href = "perfil.html";
-        }else{
+        } else {
             alert("Email ou senha incorretos");
         }
-
-        
-    })
+    });
 });

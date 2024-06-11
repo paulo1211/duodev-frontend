@@ -19,7 +19,6 @@
       href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
       rel="stylesheet"
     />
-    <!-- fontawesome -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
@@ -158,8 +157,12 @@
         <span class="close">&times;</span>
         <div class="containerCentraliza">
           <h2 class="tituloModal">Marcar horário com mentor</h2>
+          
         </div>
-        
+        <div class="containerCentraliza">
+          <input type="date" class="inputGeral" id="inputDataMentor">
+          <input type="time" class="inputGeral" id="inputHoraMentor">
+        </div>
         <div class="containerCentraliza">
           <button id="btnSolicitar" class="btnGeral">Solicitar</button>
         </div>
@@ -184,12 +187,12 @@
               </select>
 
               <label>Anos de experiência:</label>
-              <select id="idade" class="inputGeral">
+              <select id="anosExperiencia" class="inputGeral">
                   <option value="">Selecione um período</option>
-                  <option value="20-30">1-2</option>
-                  <option value="30-40">2-4</option>
-                  <option value="40-50">5-10</option>
-                  <option value="50-60">10+</option>
+                  <option value="1-2">1-2</option>
+                  <option value="2-4">2-4</option>
+                  <option value="5-10">5-10</option>
+                  <option value="10+">10+</option>
               </select>
 
               <button class="btnGeral" id="btnProcurar">PROCURAR</button>
@@ -197,7 +200,7 @@
             
 
             <div id="resultadosBusca">
-                <<div class="carrossel">
+                <div class="listaCards">
                   <!-- Cards de exemplo, que serão gerados dinamicamente -->
                 </div>
             </div>
@@ -209,7 +212,7 @@
         <span class="close">&times;</span>
         <h2 class="tituloModal">Encerrar conta</h2>
         <p>Tem certeza que vai nos deixar? ;-;</p>
-        <button class="btnGeral encerrar">ENCERRAR</button>
+        <button class="btnGeral encerrar" id="btnEncerrar">ENCERRAR</button>
       </div>
     </div>
 

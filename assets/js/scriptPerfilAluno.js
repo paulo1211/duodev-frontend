@@ -19,6 +19,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 carregarRanking();
             }else if(btnId === 'btnCadastroInteresses'){
                 carregarInteresses();
+            }else if(btnId === 'btnProcurarMentor'){
+                resetarModalProcuraMentor();
             }
         });
 
@@ -96,7 +98,25 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         if (valid) {
-            // salvar as informações no servidor
+            // Salvar as informações no servidor
+            /*
+            fetch('/api/updateUserInfo', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updateData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Dados atualizados:", data);
+                alert("Informações salvas com sucesso!");
+                document.getElementById('modalEditarInfo').style.display = "none";
+            })
+            .catch(error => {
+                console.error('Erro ao salvar informações:', error);
+            });
+            */
             console.log("Dados atualizados:", updateData);
             alert("Informações salvas com sucesso!");
             document.getElementById('modalEditarInfo').style.display = "none";
@@ -110,7 +130,6 @@ document.addEventListener("DOMContentLoaded", function() {
         return re.test(String(email).toLowerCase());
     }
     //Fim do modal Editar Informações
-
 
     // Modal Selecionar Interesses
     var interessesSelecionados = new Set();
@@ -146,7 +165,25 @@ document.addEventListener("DOMContentLoaded", function() {
 
     btnAdicionarInteresse.addEventListener('click', function() {
         if (interessesSelecionados.size > 0) {
-            // enviar lista ao servidor
+            // Enviar lista ao servidor
+            /*
+            fetch('/api/cadastrarInteresses', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ interesses: Array.from(interessesSelecionados) })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Interesses selecionados:", data);
+                alert("Interesses salvos com sucesso!");
+                document.getElementById('modalCadastroInteresses').style.display = "none";
+            })
+            .catch(error => {
+                console.error('Erro ao salvar interesses:', error);
+            });
+            */
             console.log("Interesses selecionados:", Array.from(interessesSelecionados));
             alert("Interesses salvos com sucesso!");
             document.getElementById('modalCadastroInteresses').style.display = "none";
@@ -154,54 +191,64 @@ document.addEventListener("DOMContentLoaded", function() {
             alert("Por favor, selecione pelo menos um interesse.");
         }
     });
-    //fim do modal Selecionar Interesses
+    //Fim do modal Selecionar Interesses
 
-    //Modal Marcar Horario com Mentor
-    var tabButtons = document.querySelectorAll('.tab-btn');
-    var months = document.querySelectorAll('.month');
-    var selectedDay = null;
-
-    tabButtons.forEach(function(tabButton) {
-        tabButton.addEventListener('click', function() {
-            var monthIndex = tabButton.getAttribute('data-month');
-
-            tabButtons.forEach(function(btn) {
-                btn.classList.remove('active');
-            });
-            tabButton.classList.add('active');
-
-            months.forEach(function(month) {
-                month.classList.remove('active');
-            });
-            document.querySelector('.month[data-month="' + monthIndex + '"]').classList.add('active');
-        });
-    });
-
-    var dayButtons = document.querySelectorAll('.days button');
-    dayButtons.forEach(function(dayButton) {
-        dayButton.addEventListener('click', function() {
-            if (selectedDay) {
-                selectedDay.classList.remove('selected');
-            }
-            selectedDay = dayButton;
-            selectedDay.classList.add('selected');
-        });
-    });
-
+    // Modal Marcar Horário com Mentor
     var btnSolicitar = document.getElementById('btnSolicitar');
     btnSolicitar.addEventListener('click', function() {
-        if (selectedDay) {
-            var selectedDate = selectedDay.textContent + ' ' + document.querySelector('.tab-btn.active').textContent;
-            alert('Horário solicitado para: ' + selectedDate);
+        var inputDataMentor = document.getElementById('inputDataMentor').value;
+        var inputHoraMentor = document.getElementById('inputHoraMentor').value;
+
+        if (inputDataMentor && inputHoraMentor) {
+            // Enviar solicitação ao servidor
+            /*
+            fetch('/api/marcarHorario', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ data: inputDataMentor, hora: inputHoraMentor, mentorId: 'mentorId' })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Horário solicitado para: ' + inputDataMentor + ' às ' + inputHoraMentor);
+                document.getElementById('modalMarcarHorarioMentor').style.display = "none";
+            })
+            .catch(error => console.error('Erro ao marcar horário:', error));
+            */
+            alert('Horário solicitado para: ' + inputDataMentor + ' às ' + inputHoraMentor);
             document.getElementById('modalMarcarHorarioMentor').style.display = "none";
         } else {
-            alert('Por favor, selecione um dia.');
+            alert('Por favor, selecione uma data e hora.');
         }
     });
-    //fim do modal Marcar Horario com Mentor
+    // Fim do Modal Marcar Horário com Mentor
 
-    // Modal Ranking
+    //Modal Ranking de Alunos
     function carregarRanking() {
+        /*
+        fetch('/api/getRanking')
+        .then(response => response.json())
+        .then(data => {
+            var rankingTable = document.getElementById('rankingTable').getElementsByTagName('tbody')[0];
+            rankingTable.innerHTML = "";
+
+            data.forEach(function(aluno, index) {
+                var row = rankingTable.insertRow();
+                var cellPosicao = row.insertCell(0);
+                var cellNome = row.insertCell(1);
+                var cellPontuacao = row.insertCell(2);
+
+                cellPosicao.innerHTML = index + 1;
+                cellNome.innerHTML = aluno.nome;
+                cellPontuacao.innerHTML = aluno.pontuacao;
+            });
+        })
+        .catch(error => console.error('Erro ao carregar ranking:', error));
+        */
+        var rankingTable = document.getElementById('rankingTable').getElementsByTagName('tbody')[0];
+        rankingTable.innerHTML = "";
+
         var alunos = [
             { nome: "João", pontuacao: 150 },
             { nome: "Maria", pontuacao: 130 },
@@ -209,9 +256,6 @@ document.addEventListener("DOMContentLoaded", function() {
             { nome: "Ana", pontuacao: 110 },
             { nome: "Pedro", pontuacao: 100 }
         ];
-
-        var rankingTable = document.getElementById('rankingTable').getElementsByTagName('tbody')[0];
-        rankingTable.innerHTML = ""; 
 
         alunos.forEach(function(aluno, index) {
             var row = rankingTable.insertRow();
@@ -224,66 +268,123 @@ document.addEventListener("DOMContentLoaded", function() {
             cellPontuacao.innerHTML = aluno.pontuacao;
         });
     }
-    // Fim do Modal Ranking
+    //Fim do modal Ranking de Alunos
 
-    // Modal Procura Mentor
-    document.getElementById('btnProcurar').addEventListener('click', function() {
-        
-        const competencia = document.getElementById('competencia').value;
-        const idade = document.getElementById('idade').value;
-    
-        
-        document.getElementById('filtrosBuscaMentor').style.display = 'none';
-        
-        document.getElementById('resultadosBusca').style.display = 'block';
-    
-        
-        const carrossel = document.querySelector('#resultadosBusca .carrossel');
-        carrossel.innerHTML = '';
-    
-        
-        const mentores = [
-            {
-                avatar: 'avatar1.jpg',
-                nome: 'Rafael Roveri',
-                idade: 23,
-                sexo: 'Masculino',
-                competencia: 'Java',
-                experiencia: '5-10'
-            },
-            {
-                avatar: 'avatar2.jpg',
-                nome: 'Maria Oliveira',
-                idade: 29,
-                sexo: 'Feminino',
-                competencia: 'Python',
-                experiencia: '2-4'
-            }
-            
-        ];
-    
-        
-        const mentoresFiltrados = mentores.filter(mentor => 
-            (competencia === '' || mentor.competencia === competencia) &&
-            (idade === '' || mentor.experiencia === idade)
-        );
-    
-        
-        mentoresFiltrados.forEach(mentor => {
-            const card = document.createElement('div');
-            card.classList.add('card');
-    
-            card.innerHTML = `
-                <img src="${mentor.avatar}" alt="${mentor.nome}" class="avatar">
-                <h3>${mentor.nome}</h3>
-                <p>Idade: ${mentor.idade}</p>
-                <p>Sexo: ${mentor.sexo}</p>
-                <p>Competência: ${mentor.competencia}</p>
-                <p>Anos de experiência: ${mentor.experiencia}</p>
-                <button class="btnGeral">Solicitar Reunião</button>
-            `;
-    
-            carrossel.appendChild(card);
-        });
+    // Modal Encerrar Conta
+    var btnEncerrar = document.getElementById('btnEncerrar');
+
+    btnEncerrar.addEventListener('click', function() {
+        var confirmacao = confirm("Tem certeza de que deseja encerrar sua conta?");
+        if (confirmacao) {
+            /*
+            fetch('/api/encerrarConta', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ userId: 'userId' })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Conta encerrada com sucesso!');
+                document.getElementById('modalEncerrarConta').style.display = "none";
+            })
+            .catch(error => console.error('Erro ao encerrar conta:', error));
+            */
+            alert('Conta encerrada com sucesso!');
+            document.getElementById('modalEncerrarConta').style.display = "none";
+        }
     });
+    //Fim do Modal Encerrar Conta
+
+    //Modal Procurar Mentor
+    var btnProcurar = document.getElementById('btnProcurar');
+
+    btnProcurar.addEventListener('click', function() {
+        var competencia = document.getElementById('competencia').value;
+        var anosExperiencia = document.getElementById('anosExperiencia').value;
+        
+        if (competencia && anosExperiencia) {
+            /*
+            fetch('/api/procurarMentor', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ competencia, anosExperiencia })
+            })
+            .then(response => response.json())
+            .then(mentores => {
+                document.getElementById('filtrosBuscaMentor').style.display = 'none';
+                document.getElementById('resultadosBusca').style.display = 'block';
+                
+                var listaCards = document.querySelector('.listaCards');
+                listaCards.innerHTML = '';
+                mentores.forEach(function(mentor) {
+                    var card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <h3>${mentor.nome}</h3>
+                        <a>Idade: ${mentor.idade}</a>
+                        <a>Gênero: ${mentor.genero}</a>
+                        <a>Competência: ${mentor.competencia}</a>
+                        <a>Anos de Experiência: ${mentor.experiencia}</a>
+                        <button class="btnGeral" id="marcaHorario">Marcar horário</button>
+                    `;
+                    listaCards.appendChild(card);
+                });
+                if (mentores.length === 0) {
+                    var mensagem = document.createElement('p');
+                    mensagem.textContent = 'Nenhum mentor encontrado com os filtros selecionados.';
+                    listaCards.appendChild(mensagem);
+                }
+            })
+            .catch(error => console.error('Erro ao procurar mentor:', error));
+            */
+            document.getElementById('filtrosBuscaMentor').style.display = 'none';
+            document.getElementById('resultadosBusca').style.display = 'block';
+
+            var listaCards = document.querySelector('.listaCards');
+            listaCards.innerHTML = '';
+
+            var mentores = [
+                { nome: 'João Silva', idade: 35, genero: 'Masculino', competencia: 'Java', experiencia: '5-10' },
+                { nome: 'Maria Oliveira', idade: 30, genero: 'Feminino', competencia: 'Python', experiencia: '2-4' },
+                { nome: 'Carlos Pereira', idade: 28, genero: 'Masculino', competencia: 'C++', experiencia: '1-2' },
+                { nome: 'João Silva', idade: 35, genero: 'Masculino', competencia: 'Java', experiencia: '5-10' }
+            ];
+
+            var resultadosFiltrados = mentores.filter(function(mentor) {
+                return mentor.competencia === competencia && mentor.experiencia === anosExperiencia;
+            });
+
+            resultadosFiltrados.forEach(function(mentor) {
+                var card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <h3>${mentor.nome}</h3>
+                    <a>Idade: ${mentor.idade}</a>
+                    <a>Gênero: ${mentor.genero}</a>
+                    <a>Competência: ${mentor.competencia}</a>
+                    <a>Anos de Experiência: ${mentor.experiencia}</a>
+                    <button class="btnGeral" id="marcaHorario">Marcar horário</button>
+                `;
+                listaCards.appendChild(card);
+            });
+
+            if (resultadosFiltrados.length === 0) {
+                var mensagem = document.createElement('p');
+                mensagem.textContent = 'Nenhum mentor encontrado com os filtros selecionados.';
+                listaCards.appendChild(mensagem);
+            }
+        } else {
+            alert('Por favor, selecione uma competência e um período de experiência.');
+        }
+    });
+
+    function resetarModalProcuraMentor() {
+        document.getElementById('filtrosBuscaMentor').style.display = 'flex';
+        document.getElementById('resultadosBusca').style.display = 'none';
+    }
+    //Fim do modal Procurar Mentor
 });
