@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Perfil Mentor - Duodev</title>
@@ -28,255 +28,173 @@
       referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="assets/css/estiloPerfilMentor.css" />
-  </head>
-  <body class="mentor-main">
-    <main class="mentor">
-      <div class="user">
+</head>
+<body class="mentor-main">
+<main class="mentor">
+    <div class="user">
         <i class="fa-regular fa-user"></i>
-      </div>
-      <div id="divAvaliacao">
+    </div>
+    <div id="divAvaliacao">
         <h3>5/5</h3>
-      </div>
-      <div id="divNomePerfil">
+    </div>
+    <div id="divNomePerfil">
         <h3>Nome Completo</h3>
         <h3>Mentor</h3>
-      </div>
-      <div class="btns-container">
+    </div>
+    <div class="btns-container">
         <div class="btns">
-          <button id="btnEditarInfo">Editar informações pessoais</button>
-          <button id="btnCadastroCompetencias">Cadastro de competências</button>
-          <button id="btnRankingMentores">Ranking dos mentores</button>
-          <button id="btnMarcarHorarioMentor">Calendário reuniões</button>
-          <a href="aluno.html"><button>Mudar perfil (Aluno)</button></a>
-          <button id="btnProcurarMentor">Cadastro dias e horários <br>disponíveis</button>
-          
+            <button id="btnEditarInfo">Editar informações pessoais</button>
+            <button id="btnCadastroCompetencias">Cadastro de competências</button>
+            <button id="btnRankingMentores">Ranking dos mentores</button>
+            <button id="btnSolicitacaoAluno">Abrir Solicitação de Aluno</button>
+            <a href="indexAluno.html"><button>Mudar perfil (Aluno)</button></a>
+            <button id="btnEncerrarConta" class="encerrar">Encerrar conta</button>
         </div>
-        <button id="btnEncerrarConta" class="encerrar">Encerrar conta</button>
-      </div>
-    </main>
-
-    <!-- Modais -->
-    <div id="modalEditarInfo" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2 class="tituloModal">Editar informações</h2>
-        <input
-          type="email"
-          placeholder="exemplo@exemplo.com"
-          class="inputGeral"
-          id="inputEmail"
-        />
-        <input
-          type="text"
-          placeholder="Nome completo"
-          class="inputGeral"
-          id="inputUsername"
-        />
-        <input
-          type="password"
-          placeholder="Nova senha"
-          class="inputGeral"
-          id="inputNewPassword"
-        />
-        <input
-          type="password"
-          placeholder="Confirmar nova senha"
-          class="inputGeral"
-          id="inputConfirmPassword"
-        />
-        <select class="inputGeral" id="selectGenero">
-          <option value="" class="optSel">Selecione seu gênero</option>
-          <option value="CisH" class="optSel">Homem Cis</option>
-          <option value="CisM" class="optSel">Mulher Cis</option>
-          <option value="TransH" class="optSel">Homem Trans</option>
-          <option value="TransM" class="optSel">Mulher Trans</option>
-          <option value="NaoBinario" class="optSel">Não-binário</option>
-          <option value="GeneroFluido" class="optSel">Gênero Fluido</option>
-          <option value="Bigenero" class="optSel">Bigênero</option>
-          <option value="Agenero" class="optSel">Agênero</option>
-          <option value="Outro" class="optSel">Outro</option>
-          <option value="PrefiroNaoInformar" class="optSel">
-            Prefiro não informar
-          </option>
-        </select>
-        <input
-          type="text"
-          placeholder="Especificar outro gênero"
-          class="inputGeral"
-          id="inputGeneroOutro"
-          style="display: none"
-        />
-        <div class="btn-container">
-          <button class="btnGeral" id="btnSalvar">SALVAR</button>
-        </div>
-      </div>
     </div>
+</main>
 
-    <!--<div id="modalCadastroCompetencias" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2 class="tituloModal">Selecione suas competências</h2>
-            <div class="competencias" id="competenciasContainer">
-
-            </div>
-            <div class="btn-container">
-                <button class="btnGeral" id="btnAdicionarCompetencias">Adicionar competências</button>
-            </div>
-        </div>
-    </div> -->
-
-    <div id="modalCadastroCompetencias" class="modal">
-      <div class="modal-content">
-          <span class="close">&times;</span>
-          <h2 class="tituloModal">Selecione suas competências</h2>
-          <div class="competencias" id="competenciasContainer">
-              <div class="competencia">
-                  <label>
-                      <input type="checkbox" value="Java"> 
-                  </label>
-              </div>
-              <div class="competencia">
-                  <label>
-                      <input type="checkbox" value="C++"> 
-                  </label>
-              </div>
-              <div class="competencia">
-                  <label>
-                      <input type="checkbox" value="JavaScript"> 
-                  </label>
-              </div>
-              <div class="competencia">
-                  <label>
-                      <input type="checkbox" value="Python"> 
-                  </label>
-              </div>
-              <div class="competencia">
-                  <label>
-                      <input type="checkbox" value="C#"> 
-                  </label>
-              </div>
-          </div>
-          <div class="btn-container">
-              <button class="btnGeral" id="btnAdicionarCompetencias">Adicionar competências</button>
-          </div>
-      </div>
+<!-- Modais -->
+<div id="modalEditarInfo" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2 class="tituloModal">Editar informações</h2>
+    <input
+      type="email"
+      placeholder="exemplo@exemplo.com"
+      class="inputGeral"
+      id="inputEmail"
+    />
+    <input
+      type="text"
+      placeholder="Nome completo"
+      class="inputGeral"
+      id="inputUsername"
+    />
+    <input
+      type="password"
+      placeholder="Nova senha"
+      class="inputGeral"
+      id="inputNewPassword"
+    />
+    <input
+      type="password"
+      placeholder="Confirmar nova senha"
+      class="inputGeral"
+      id="inputConfirmPassword"
+    />
+    <select class="inputGeral" id="selectGenero">
+      <option value="" class="optSel">Selecione seu gênero</option>
+      <option value="Masculino" class="optSel">Masculino</option>
+      <option value="Feminino" class="optSel">Feminino</option>
+      <option value="NaoBinario" class="optSel">Não Binário</option>
+      <option value="Outro" class="optSel">Outro</option>
+      <option value="PrefiroNaoInformar" class="optSel">
+        Prefiro não informar
+      </option>
+    </select>
+    <input
+      type="text"
+      placeholder="Especificar outro gênero"
+      class="inputGeral"
+      id="inputGeneroOutro"
+      style="display: none"
+    />
+    <div class="btn-container">
+      <button class="btnGeral" id="btnSalvar">SALVAR</button>
+    </div>
   </div>
-  
-  
+</div>
 
-    <div id="modalRankingMentores" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2 class="tituloModal">Ranking dos mentores</h2>
-            <table class="ranking-table" id="rankingTable">
-                <thead>
-                    <tr>
-                        <th>Posição</th>
-                        <th>Nome</th>
-                        <th>Pontuação</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Linhas de ranking serão carregadas dinamicamente -->
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <div id="modalMarcarHorarioMentor" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2 class="tituloModal">Marcar horário com mentor</h2>
-        <div class="calendar">
-            <div class="tabs">
-                <button class="tab-btn" data-month="0">Janeiro</button>
-                <button class="tab-btn" data-month="1">Fevereiro</button>
-                <button class="tab-btn" data-month="2">Março</button>
-                <!-- Adicione mais botões de mês conforme necessário -->
-            </div>
-            <div class="months">
-                <div class="month" data-month="0">
-                    <div class="days">
-                        <!-- Dias de Janeiro -->
-                        <button>1</button>
-                        <button>2</button>
-                        <button>3</button>
-                        <!-- Continue para todos os dias -->
-                    </div>
-                </div>
-                <div class="month" data-month="1">
-                    <div class="days">
-                        <!-- Dias de Fevereiro -->
-                        <button>1</button>
-                        <button>2</button>
-                        <button>3</button>
-                        <!-- Continue para todos os dias -->
-                    </div>
-                </div>
-                <div class="month" data-month="2">
-                    <div class="days">
-                        <!-- Dias de Março -->
-                        <button>1</button>
-                        <button>2</button>
-                        <button>3</button>
-                        <!-- Continue para todos os dias -->
-                    </div>
-                </div>
-                <!-- Adicione mais divs de mês conforme necessário -->
-            </div>
-        </div>
-        <button id="btnSolicitar">Solicitar</button>
+<div id="modalCadastroCompetencias" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2 class="tituloModal">Selecione suas competências</h2>
+    <div class="competencias" id="competenciasContainer">
+      <div class="competencia">
+        <label>
+          <input type="checkbox" value="Java">
+        </label>
+      </div>
+      <div class="competencia">
+        <label>
+          <input type="checkbox" value="C++">
+        </label>
+      </div>
+      <div class="competencia">
+        <label>
+          <input type="checkbox" value="JavaScript">
+        </label>
+      </div>
+      <div class="competencia">
+        <label>
+          <input type="checkbox" value="Python">
+        </label>
+      </div>
+      <div class="competencia">
+        <label>
+          <input type="checkbox" value="C#">
+        </label>
       </div>
     </div>
-
-    <div id="modalProcuraMentor" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2 class="tituloModal">Procure seu mentor</h2>
-            
-            <label>Competência:</label>
-            <select id="competencia" class="inputGeral">
-                <option value="">Selecione uma competência</option>
-                <option value="Java">Java</option>
-                <option value="JavaScript">JavaScript</option>
-                <option value="Python">Python</option>
-                <option value="C++">C++</option>
-                <option value="C#">C#</option>
-            </select>
-
-            <label>Anos de experiência:</label>
-            <select id="idade" class="inputGeral">
-                <option value="">Selecione uma faixa etária</option>
-                <option value="20-30">1-2</option>
-                <option value="30-40">2-4</option>
-                <option value="40-50">5-10</option>
-                <option value="50-60">10+</option>
-            </select>
-
-            <button class="btnGeral" id="btnProcurar">PROCURAR</button>
-
-            <div id="resultadosBusca">
-                <!-- Cards com resultados da busca aparecerão aqui -->
-            </div>
-        </div>
+    <div class="btn-container">
+      <button class="btnGeral" id="btnAdicionarCompetencias">Adicionar competências</button>
     </div>
+  </div>
+</div>
 
-    <div id="modalEncerrarConta" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2 class="tituloModal">Encerrar conta</h2>
-        <p>Tem certeza que vai nos deixar? ;-;</p>
-        <button class="btnGeral encerrar">ENCERRAR</button>
+<div id="modalRankingMentores" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2 class="tituloModal">Ranking dos mentores</h2>
+    <table class="ranking-table" id="rankingTable">
+      <thead>
+        <tr>
+          <th>Posição</th>
+          <th>Nome</th>
+          <th>Pontuação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Linhas de ranking serão carregadas dinamicamente -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div id="modalSolicitacaoAluno" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2 class="tituloModal">Solicitação de Aluno</h2>
+    <div class="solicitacao-container">
+      <div class="solicitacao-card">
+        <h3>Nome do Aluno</h3>
+        <p>Idade: 20</p>
+        <p>Horário: 10:00</p>
+        <p>Interesse: Java</p>
+        <div class="button-container">
+          <button class="btnSolicitacao aceitar">Aceitar</button>
+          <button class="btnSolicitacao recusar">Recusar</button>
+        </div>
       </div>
     </div>
+  </div>
+</div>
 
+<div id="modalEncerrarConta" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2 class="tituloModal">Encerrar conta</h2>
+    <p>Tem certeza que vai nos deixar? ;-;</p>
+    <button class="btnGeral encerrar">ENCERRAR</button>
+  </div>
+</div>
 
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
-      integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <script src="assets/js/scriptPerfilMentor.js"></script>
-  </body>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
+    integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+></script>
+<script src="assets/js/scriptPerfilMentor.js"></script>
+</body>
 </html>
