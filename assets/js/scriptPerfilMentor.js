@@ -99,6 +99,20 @@ document.addEventListener("DOMContentLoaded", function() {
             console.log("Dados atualizados:", updateData);
             alert("Informações salvas com sucesso!");
             document.getElementById('modalEditarInfo').style.display = "none";
+            
+            // Exemplo de chamada para o endpoint de edição de informações
+
+            fetch('/usuario', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updateData)
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
+
         } else {
             alert("Por favor, preencha todos os campos corretamente.");
         }
@@ -109,7 +123,6 @@ document.addEventListener("DOMContentLoaded", function() {
         return re.test(String(email).toLowerCase());
     }
     //Fim do modal Editar Informações
-
 
     // Modal Selecionar competencias
     var competenciasSelecionadas = new Set();
@@ -147,6 +160,20 @@ document.addEventListener("DOMContentLoaded", function() {
         if (competenciasSelecionadas.size > 0) {
             alert('Competências selecionadas: ' + Array.from(competenciasSelecionadas).join(', '));
             document.getElementById('modalCadastroCompetencias').style.display = "none";
+            
+            // Exemplo de chamada para o endpoint de cadastro de competências
+            
+            fetch('/competencia', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ competencias: Array.from(competenciasSelecionadas) })
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
+            
         } else {
             alert("Por favor, selecione pelo menos uma competência.");
         }
@@ -176,6 +203,28 @@ document.addEventListener("DOMContentLoaded", function() {
             cellNome.innerHTML = mentor.nome;
             cellPontuacao.innerHTML = mentor.pontuacao;
         });
+
+        // Exemplo de chamada para o endpoint de ranking de mentores
+        
+        fetch('/ranking/mentores', {
+            method: 'GET'
+        })
+        .then(response => response.json())
+        .then(data => {
+            rankingTable.innerHTML = "";
+            data.forEach(function(mentor, index) {
+                var row = rankingTable.insertRow();
+                var cellPosicao = row.insertCell(0);
+                var cellNome = row.insertCell(1);
+                var cellPontuacao = row.insertCell(2);
+
+                cellPosicao.innerHTML = index + 1;
+                cellNome.innerHTML = mentor.nome;
+                cellPontuacao.innerHTML = mentor.pontuacao;
+            });
+        })
+        .catch(error => console.error('Error:', error));
+        
     }
     // Fim do Modal Ranking
 
@@ -212,10 +261,38 @@ document.addEventListener("DOMContentLoaded", function() {
     btnAceitar.addEventListener('click', function() {
         alert('Solicitação aceita.');
         document.getElementById('modalSolicitacaoAluno').style.display = "none";
+        
+        // Exemplo de chamada para o endpoint de solicitação de aluno (aceitar)
+        
+        fetch('/sessao', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ acao: 'aceitar' })
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.error('Error:', error));
+        
     });
 
     btnRecusar.addEventListener('click', function() {
         alert('Solicitação recusada.');
         document.getElementById('modalSolicitacaoAluno').style.display = "none";
+        
+        // Exemplo de chamada para o endpoint de solicitação de aluno (recusar)
+        
+        fetch('/api/solicitacaoAluno', { // Não sei qual é a chave deste endpoint
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ acao: 'recusar' })
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.error('Error:', error));
+        
     });
 });
