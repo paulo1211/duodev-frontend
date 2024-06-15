@@ -101,8 +101,8 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById('modalEditarInfo').style.display = "none";
             
             // Exemplo de chamada para o endpoint de edição de informações
-            /*
-            fetch('/api/editarInfo', {
+
+            fetch('/usuario', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(response => response.json())
             .then(data => console.log(data))
             .catch(error => console.error('Error:', error));
-            */
+
         } else {
             alert("Por favor, preencha todos os campos corretamente.");
         }
@@ -162,8 +162,8 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById('modalCadastroCompetencias').style.display = "none";
             
             // Exemplo de chamada para o endpoint de cadastro de competências
-            /*
-            fetch('/api/cadastroCompetencias', {
+            
+            fetch('/competencia', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -173,7 +173,7 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(response => response.json())
             .then(data => console.log(data))
             .catch(error => console.error('Error:', error));
-            */
+            
         } else {
             alert("Por favor, selecione pelo menos uma competência.");
         }
@@ -205,8 +205,8 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
         // Exemplo de chamada para o endpoint de ranking de mentores
-        /*
-        fetch('/api/rankingMentores', {
+        
+        fetch('/ranking/mentores', {
             method: 'GET'
         })
         .then(response => response.json())
@@ -224,7 +224,7 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         })
         .catch(error => console.error('Error:', error));
-        */
+        
     }
     // Fim do Modal Ranking
 
@@ -263,8 +263,8 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('modalSolicitacaoAluno').style.display = "none";
         
         // Exemplo de chamada para o endpoint de solicitação de aluno (aceitar)
-        /*
-        fetch('/api/solicitacaoAluno', {
+        
+        fetch('/sessao', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -274,7 +274,7 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(response => response.json())
         .then(data => console.log(data))
         .catch(error => console.error('Error:', error));
-        */
+        
     });
 
     btnRecusar.addEventListener('click', function() {
@@ -282,7 +282,7 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('modalSolicitacaoAluno').style.display = "none";
         
         // Exemplo de chamada para o endpoint de solicitação de aluno (recusar)
-        /*
+        
         fetch('/api/solicitacaoAluno', {
             method: 'POST',
             headers: {
@@ -293,6 +293,6 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(response => response.json())
         .then(data => console.log(data))
         .catch(error => console.error('Error:', error));
-        */
+        
     });
 });
