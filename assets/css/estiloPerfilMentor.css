@@ -330,3 +330,10 @@ button.encerrar {
 .card a{
   font-size: small;
 }
+
+.centraliza{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
