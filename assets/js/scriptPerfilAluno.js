@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var avaliacao = document.getElementById('avaliacao');
     var nomeCompleto = document.getElementById('nomeCompleto');
 
-    
+    /*
     function fetchAvaliacao() {
         fetch('/api/avaliacao')
             .then(response => response.json())
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     
     fetchAvaliacao();
-    fetchNomeCompleto();
+    fetchNomeCompleto();*/
     
     
     var modals = {
@@ -77,13 +77,18 @@ document.addEventListener("DOMContentLoaded", function() {
         var newPassword = document.getElementById('inputNewPassword').value;
         var confirmPassword = document.getElementById('inputConfirmPassword').value;
         var genero = document.getElementById('selectGenero').value;
-        var generoOutro = document.getElementById('inputGeneroOutro').value;
+        var dataNascimento = document.getElementById('inputDataNascimento').value;
+        var cpf = document.getElementById("inputCPF").value.replace(/\D/g, '');
 
         var valid = true;
         var updateData = {};
 
+        // Verificar se pelo menos um campo foi alterado
+        var campoAlterado = false;
+
         if (email.trim() !== "") {
-            if (!validateEmail(email)) {
+            campoAlterado = true;
+            if (!validarEmail(email)) {
                 document.getElementById('inputEmail').classList.add('inputInvalidado');
                 valid = false;
             } else {
@@ -93,11 +98,16 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         if (username.trim() !== "") {
+            campoAlterado = true;
             updateData.username = username;
         }
 
         if (newPassword.trim() !== "" || confirmPassword.trim() !== "") {
-            if (newPassword !== confirmPassword) {
+            campoAlterado = true;
+            if (newPassword.length < 6) {
+                alert("A senha deve ter no mínimo 6 caracteres.");
+                valid = false;
+            } else if (newPassword !== confirmPassword) {
                 document.getElementById('inputNewPassword').classList.add('inputInvalidado');
                 document.getElementById('inputConfirmPassword').classList.add('inputInvalidado');
                 valid = false;
@@ -109,18 +119,35 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         if (genero !== "") {
-            if (genero === "Outro" && generoOutro.trim() === "") {
-                document.getElementById('inputGeneroOutro').classList.add('inputInvalidado');
+            campoAlterado = true;
+            document.getElementById('selectGenero').classList.remove('inputInvalidado');
+            updateData.genero = genero;
+        }
+
+        if (dataNascimento.trim() !== "") {
+            campoAlterado = true;
+            document.getElementById('inputDataNascimento').classList.remove('inputInvalidado');
+            updateData.dataNascimento = dataNascimento;
+        }
+
+        if (cpf.trim() !== "") {
+            campoAlterado = true;
+            if (!validarCPF(cpf)) {
+                document.getElementById('inputCpf').classList.add('inputInvalidado');
+                alert("CPF inválido.");
                 valid = false;
             } else {
-                document.getElementById('selectGenero').classList.remove('inputInvalidado');
-                document.getElementById('inputGeneroOutro').classList.remove('inputInvalidado');
-                updateData.genero = genero === "Outro" ? generoOutro : genero;
+                document.getElementById('inputCpf').classList.remove('inputInvalidado');
+                updateData.cpf = cpf;
             }
         }
 
+        if (!campoAlterado) {
+            alert("Por favor, altere pelo menos uma informação.");
+            return;
+        }
+
         if (valid) {
-            
             fetch('/api/updateUserInfo', {
                 method: 'POST',
                 headers: {
@@ -142,10 +169,31 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    function validateEmail(email) {
+    function validarEmail(email) {
         var re = /^(([^<>()\[\]\.,;:\s@"]+(\.[^<>()\[\]\.,;:\s@"]+)*)|(".+"))@(([^<>()[\]\.,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,})$/i;
         return re.test(String(email).toLowerCase());
     }
+
+    function validarCPF(cpf) {
+        cpf = cpf.replace(/\D/g, '');
+        if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
+        let soma = 0, resto;
+        for (let i = 1; i <= 9; i++) soma += parseInt(cpf.substring(i - 1, i)) * (11 - i);
+        resto = (soma * 10) % 11;
+        if (resto === 10 || resto === 11) resto = 0;
+        if (resto !== parseInt(cpf.substring(9, 10))) return false;
+        soma = 0;
+        for (let i = 1; i <= 10; i++) soma += parseInt(cpf.substring(i - 1, i)) * (12 - i);
+        resto = (soma * 10) % 11;
+        return resto === 10 || resto === 11 ? 0 : resto === parseInt(cpf.substring(10, 11));
+    }
+
+    document.getElementById('inputCPF').addEventListener('input', function(e) {
+        let cpf = e.target.value.replace(/\D/g, '');
+        if (cpf.length > 11) cpf = cpf.slice(0, 11);
+        cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+        e.target.value = cpf;
+    });
     //Fim do modal Editar Informações
 
     Object.keys(modals).forEach(function(btnId) {
