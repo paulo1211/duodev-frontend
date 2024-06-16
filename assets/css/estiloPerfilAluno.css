@@ -328,3 +328,7 @@ button.encerrar {
 .card a{
     font-size: small;
 }
+
+#divSelecionarHorarioMentor{
+    display: none;
+}

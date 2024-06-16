@@ -1,4 +1,32 @@
 document.addEventListener("DOMContentLoaded", () => {
+    var avaliacao = document.getElementById('avaliacao');
+    var nomeCompleto = document.getElementById('nomeCompleto');
+
+    
+    function fetchAvaliacao() {
+        fetch('/api/avaliacao')
+            .then(response => response.json())
+            .then(data => {
+                avaliacao.textContent = data.avaliacao;
+                console.log('Avaliação:', data.avaliacao);
+            })
+            .catch(error => console.error('Erro ao buscar avaliação:', error));
+    }
+
+    function fetchNomeCompleto() {
+        fetch('/api/nomeCompleto')
+            .then(response => response.json())
+            .then(data => {
+                nomeCompleto.textContent = data.nomeCompleto;
+                console.log('Nome Completo:', data.nomeCompleto);
+            })
+            .catch(error => console.error('Erro ao buscar nome completo:', error));
+    }
+
+    
+    fetchAvaliacao();
+    fetchNomeCompleto();
+    
     const modals = {
         btnEditarInfo: 'modalEditarInfo',
         btnCadastroCompetencias: 'modalCadastroCompetencias',
