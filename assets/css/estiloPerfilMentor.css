@@ -230,6 +230,49 @@ button.encerrar {
   text-decoration: none;
 }
 
+.calendar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.month {
+  display: none;
+}
+.month.active {
+  display: block;
+}
+.month .days {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.month .days button {
+  margin: 5px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+.month .days button.selected {
+  border-color: #00f;
+  background-color: #ccf;
+}
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+.tabs button {
+  margin: 0 5px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+.tabs button.active {
+  background-color: #ccc;
+}
+
 #rankingTable {
   width: 100%;
   margin: 20px 0;
@@ -266,95 +309,4 @@ button.encerrar {
 
 #rankingTable tbody tr:last-child td:last-child {
   border-bottom-right-radius: 10px;
-}
-
-.solicitacao-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.solicitacao-card {
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 400px;
-}
-
-.solicitacao-card h3 {
-  margin-top: 0;
-}
-
-.button-container {
-  display: flex;
-  justify-content: space-between;
-}
-
-.btnSolicitacao {
-  padding: 10px 20px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.btnSolicitacao.aceitar {
-  background-color: #4caf50;
-  color: white;
-}
-
-.btnSolicitacao.recusar {
-  background-color: #f44336;
-  color: white;
-}
-
-.btns {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.solicitacao-card {
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 400px;
-}
-
-.solicitacao-card h3,
-.solicitacao-card p {
-  margin: 5px 0; /* Ajuste da margem para reduzir espaçamento */
-  padding: 0;    /* Remover padding extra */
-}
-
-.button-container {
-  display: flex;
-  justify-content: space-between;
-}
-
-.btnSolicitacao {
-  padding: 10px 20px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.btnSolicitacao.aceitar {
-  background-color: #4caf50;
-  color: white;
-}
-
-.btnSolicitacao.recusar {
-  background-color: #f44336;
-  color: white;
 }

@@ -25,7 +25,7 @@
         
     </div>
 
-    <div id="modalEsqSenha" class="modal">
+    <div id="modalEsqSenha" class="modal" style="display: none;">
         <div class="modal-content">
             <div id="conteudoDeafultModal">
                 <span class="close" id="btnFechar">&times;</span>
@@ -34,8 +34,6 @@
                 <button class="btnGeral" id="btnGerarEmail">ENVIAR EMAIL</button>
                 <a id="msg"></a>
             </div>
-            
-            
             <div id="soApareceQuandoMandarEmail">
                 <span class="close" id="btnFechar">&times;</span>
                 <h2 id="tituloModal">Verifique o código</h2>
@@ -46,16 +44,14 @@
             <div id="soApareceQuandoVerificarOCodigo">
                 <span class="close" id="btnFechar">&times;</span>
                 <h2 id="tituloModal">Redefina sua senha</h2>
-                <input type="password" class="inputGeral" placeholder="Nova Senha" name="inputSenha">
-                <input type="password" class="inputGeral" placeholder="Confirmar Nova Senha" name="inputSenha">
+                <input type="password" class="inputGeral" placeholder="Nova Senha" name="inputSenha" id="inputNovaSenha">
+                <input type="password" class="inputGeral" placeholder="Confirmar Nova Senha" name="inputSenha" id="inputConfirmarSenha">
                 <button class="btnGeral" id="btnEsqSenha">REDEFINIR</button>
                 <a id="msg"></a>
             </div>
-
-            </div>
         </div>
-
     </div>
+    
     
 </body>
 <script src="assets/js/scriptLogin.js"></script>

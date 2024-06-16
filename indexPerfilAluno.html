@@ -46,7 +46,7 @@
           <button id="btnCadastroInteresses">Cadastro de interesses</button>
           <button id="btnRankingAlunos">Ranking dos alunos</button>
           <button id="btnMarcarHorarioMentor">Marcar horário com mentor</button>
-          <a href="mentor.html"><button>Mudar perfil (Mentor)</button></a>
+          <a href="indexMentor.html"><button>Mudar perfil (Mentor)</button></a>
           <button id="btnProcurarMentor">Procurar mentores</button>
           
         </div>
@@ -86,26 +86,14 @@
           />
           <select class="inputGeral" id="selectGenero">
             <option value="" class="optSel">Selecione seu gênero</option>
-            <option value="CisH" class="optSel">Homem Cis</option>
-            <option value="CisM" class="optSel">Mulher Cis</option>
-            <option value="TransH" class="optSel">Homem Trans</option>
-            <option value="TransM" class="optSel">Mulher Trans</option>
-            <option value="NaoBinario" class="optSel">Não-binário</option>
-            <option value="GeneroFluido" class="optSel">Gênero Fluido</option>
-            <option value="Bigenero" class="optSel">Bigênero</option>
-            <option value="Agenero" class="optSel">Agênero</option>
+            <option value="MASCULINO" class="optSel">Masculino</option>
+            <option value="FEMININO" class="optSel">Feminino</option>
+            <option value="NAO_BINARIO" class="optSel">Não Binário</option>
             <option value="Outro" class="optSel">Outro</option>
             <option value="PrefiroNaoInformar" class="optSel">
               Prefiro não informar
             </option>
           </select>
-          <input
-            type="text"
-            placeholder="Especificar outro gênero"
-            class="inputGeral"
-            id="inputGeneroOutro"
-            style="display: none"
-          />
         </div>
         
         <div class="containerCentraliza">
@@ -115,20 +103,28 @@
     </div>
 
     <div id="modalCadastroInteresses" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <div class="containerCentraliza">
-              <h2 class="tituloModal">Selecione seus interesses</h2>
-            </div>
-            
-            <div class="interesse" id="interesseContainer">
-
-            </div>
-            <div class="containerCentraliza">
-                <button class="btnGeral" id="btnAdicionarInteresse">Adicionar interesse</button>
-            </div>
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="containerCentraliza">
+          <h2 class="tituloModal">Selecione seus interesses</h2>
         </div>
+        
+        <div class="centraliza">
+          <select class="inputGeral" id="selectInteresses">
+            <option value="" class="optSel">Selecione uma linguagem</option>
+            <option value="Java" class="optSel">Java</option>
+            <option value="JavaScript" class="optSel">JavaScript</option>
+            <option value="Python" class="optSel">Python</option>
+            <option value="C++" class="optSel">C++</option>
+            <option value="C#" class="optSel">C#</option>
+          </select>
+        </div>
+        <div class="containerCentraliza">
+          <button class="btnGeral" id="btnSalvarInteresse">Salvar interesse</button>
+        </div>
+      </div>
     </div>
+    
 
     <div id="modalRankingAlunos" class="modal">
         <div class="modal-content">
@@ -142,7 +138,7 @@
                     <tr>
                         <th>Posição</th>
                         <th>Nome</th>
-                        <th>Pontuação</th>
+                        <th>Avaliação</th>
                     </tr>
                 </thead>
                 <tbody>
