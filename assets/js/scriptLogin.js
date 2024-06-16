@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const senhaLogin = document.getElementById("inputSenhaLogin").value;
 
         if (validarEmail(emailLogin)) {
-            fetch('/api/login', {
+            fetch('/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
