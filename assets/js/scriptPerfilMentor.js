@@ -36,14 +36,6 @@ document.addEventListener("DOMContentLoaded", function() {
     var selectGenero = document.getElementById('selectGenero');
     var inputGeneroOutro = document.getElementById('inputGeneroOutro');
 
-    selectGenero.addEventListener('change', function() {
-        if (selectGenero.value === 'Outro') {
-            inputGeneroOutro.style.display = 'block';
-        } else {
-            inputGeneroOutro.style.display = 'none';
-        }
-    });
-
     var btnSalvar = document.getElementById('btnSalvar');
 
     btnSalvar.addEventListener('click', function() {
@@ -125,57 +117,59 @@ document.addEventListener("DOMContentLoaded", function() {
     //Fim do modal Editar Informações
 
     // Modal Selecionar competencias
-    var competenciasSelecionadas = new Set();
-    var competenciasContainer = document.getElementById('competenciasContainer');
-    var btnAdicionarCompetencias = document.getElementById('btnAdicionarCompetencias');
+    Object.keys(modals).forEach(function(btnId) {
+        var btn = document.getElementById(btnId);
+        var modal = document.getElementById(modals[btnId]);
+        var span = modal.getElementsByClassName("close")[0];
 
-    function carregarCompetencias() {
-        competenciasContainer.innerHTML = ''
-        var competencias = [
-            "Java", "C++", "JavaScript", "Python", "C#"
-        ];
-
-        competencias.forEach(function(competencia) {
-            var button = document.createElement('button');
-            button.className = 'btnComandos';
-            button.setAttribute('data-competencia', competencia);
-            button.innerText = competencia;
-
-            button.addEventListener('click', function() {
-                var competencia = button.getAttribute('data-competencia');
-                if (competenciasSelecionadas.has(competencia)) {
-                    competenciasSelecionadas.delete(competencia);
-                    button.classList.remove('selected');
-                } else {
-                    competenciasSelecionadas.add(competencia);
-                    button.classList.add('selected');
-                }
-            });
-
-            competenciasContainer.appendChild(button);
+        btn.addEventListener('click', function() {
+            modal.style.display = "block";
+            if (btnId === 'btnRankingMentores') {
+                carregarRanking();
+            } else if (btnId === 'btnCadastroCompetencias') {
+                carregarCompetencias();
+            }
         });
+
+        span.addEventListener('click', function() {
+            modal.style.display = "none";
+        });
+
+        window.addEventListener('click', function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        });
+    });
+
+    // Função para carregar competências (agora não faz nada específico, pois o select é fixo no HTML)
+    function carregarCompetencias() {
+        // Aqui podemos adicionar funcionalidades adicionais se necessário.
     }
 
+    var btnAdicionarCompetencias = document.getElementById('btnAdicionarCompetencias');
+
     btnAdicionarCompetencias.addEventListener('click', function() {
-        if (competenciasSelecionadas.size > 0) {
-            alert('Competências selecionadas: ' + Array.from(competenciasSelecionadas).join(', '));
+        var selectCompetencias = document.getElementById('selectCompetencias').value;
+
+        if (selectCompetencias) {
+            console.log("Competência selecionada:", selectCompetencias);
+            alert("Competência salva com sucesso!");
             document.getElementById('modalCadastroCompetencias').style.display = "none";
-            
+
             // Exemplo de chamada para o endpoint de cadastro de competências
-            
             fetch('/competencia', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ competencias: Array.from(competenciasSelecionadas) })
+                body: JSON.stringify({ competencia: selectCompetencias })
             })
             .then(response => response.json())
             .then(data => console.log(data))
             .catch(error => console.error('Error:', error));
-            
         } else {
-            alert("Por favor, selecione pelo menos uma competência.");
+            alert("Por favor, selecione uma competência.");
         }
     });
     //fim do modal Selecionar Competencias
@@ -281,18 +275,6 @@ document.addEventListener("DOMContentLoaded", function() {
         alert('Solicitação recusada.');
         document.getElementById('modalSolicitacaoAluno').style.display = "none";
         
-        // Exemplo de chamada para o endpoint de solicitação de aluno (recusar)
-        
-        fetch('/api/solicitacaoAluno', { // Não sei qual é a chave deste endpoint
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ acao: 'recusar' })
-        })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => console.error('Error:', error));
         
     });
 });

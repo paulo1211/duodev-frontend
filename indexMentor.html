@@ -47,7 +47,7 @@
             <button id="btnCadastroCompetencias">Cadastro de competências</button>
             <button id="btnRankingMentores">Ranking dos mentores</button>
             <button id="btnSolicitacaoAluno">Abrir Solicitação de Aluno</button>
-            <a href="indexAluno.html"><button>Mudar perfil (Aluno)</button></a>
+            <a href="indexPerfilAluno.html"><button>Mudar perfil (Aluno)</button></a>
             <button id="btnEncerrarConta" class="encerrar">Encerrar conta</button>
         </div>
     </div>
@@ -84,21 +84,15 @@
     />
     <select class="inputGeral" id="selectGenero">
       <option value="" class="optSel">Selecione seu gênero</option>
-      <option value="Masculino" class="optSel">Masculino</option>
-      <option value="Feminino" class="optSel">Feminino</option>
-      <option value="NaoBinario" class="optSel">Não Binário</option>
-      <option value="Outro" class="optSel">Outro</option>
-      <option value="PrefiroNaoInformar" class="optSel">
+      <option value="MASCULINO" class="optSel">Masculino</option>
+      <option value="FEMININO" class="optSel">Feminino</option>
+      <option value="NAO_BINARIO" class="optSel">Não Binário</option>
+      <option value="OUTRO" class="optSel">Outro</option>
+      <option value="PREFIRO_NAO_DECLARAR" class="optSel">
         Prefiro não informar
       </option>
     </select>
-    <input
-      type="text"
-      placeholder="Especificar outro gênero"
-      class="inputGeral"
-      id="inputGeneroOutro"
-      style="display: none"
-    />
+    
     <div class="btn-container">
       <button class="btnGeral" id="btnSalvar">SALVAR</button>
     </div>
@@ -110,34 +104,17 @@
     <span class="close">&times;</span>
     <h2 class="tituloModal">Selecione suas competências</h2>
     <div class="competencias" id="competenciasContainer">
-      <div class="competencia">
-        <label>
-          <input type="checkbox" value="Java">
-        </label>
-      </div>
-      <div class="competencia">
-        <label>
-          <input type="checkbox" value="C++">
-        </label>
-      </div>
-      <div class="competencia">
-        <label>
-          <input type="checkbox" value="JavaScript">
-        </label>
-      </div>
-      <div class="competencia">
-        <label>
-          <input type="checkbox" value="Python">
-        </label>
-      </div>
-      <div class="competencia">
-        <label>
-          <input type="checkbox" value="C#">
-        </label>
-      </div>
+      <select id="selectCompetencias" class="inputGeral">
+        <option value="">Selecione uma competência</option>
+        <option value="Java">Java</option>
+        <option value="JavaScript">JavaScript</option>
+        <option value="C++">C++</option>
+        <option value="C#">C#</option>
+        <option value="Python">Python</option>
+      </select>
     </div>
     <div class="btn-container">
-      <button class="btnGeral" id="btnAdicionarCompetencias">Adicionar competências</button>
+      <button class="btnGeral" id="btnAdicionarCompetencias">Adicionar competência</button>
     </div>
   </div>
 </div>
