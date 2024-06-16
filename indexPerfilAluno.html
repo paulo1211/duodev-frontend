@@ -34,10 +34,10 @@
         <i class="fa-regular fa-user"></i>
       </div>
       <div id="divAvaliacao">
-        <h3>5/5</h3>
+        <h3 id="avaliacao">5/5</h3>
       </div>
       <div id="divNomePerfil">
-        <h3>Nome Completo</h3>
+        <h3 id="nomeCompleto">Nome Completo</h3>
         <h3>Aluno</h3>
       </div>
       <div class="btns-container">
@@ -45,7 +45,6 @@
           <button id="btnEditarInfo">Editar informações pessoais</button>
           <button id="btnCadastroInteresses">Cadastro de interesses</button>
           <button id="btnRankingAlunos">Ranking dos alunos</button>
-          <button id="btnMarcarHorarioMentor">Marcar horário com mentor</button>
           <button id="btnProcurarMentor">Procurar mentores</button>
         </div>
         <button id="btnEncerrarConta" class="encerrar">Encerrar conta</button>
@@ -146,24 +145,6 @@
         </div>
     </div>
 
-    <div id="modalMarcarHorarioMentor" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <div class="containerCentraliza">
-          <h2 class="tituloModal">Marcar horário com mentor</h2>
-          
-        </div>
-        <div class="containerCentraliza">
-          <input type="date" class="inputGeral" id="inputDataMentor">
-          <input type="time" class="inputGeral" id="inputHoraMentor">
-        </div>
-        <div class="containerCentraliza">
-          <button id="btnSolicitar" class="btnGeral">Solicitar</button>
-        </div>
-        
-      </div>
-    </div>
-
     <div id="modalProcuraMentor" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -198,6 +179,20 @@
                   <!-- Cards de exemplo, que serão gerados dinamicamente -->
                 </div>
             </div>
+            <div id="divSelecionarHorarioMentor">
+              <div class="containerCentraliza">
+                <h2 class="tituloModal">Marcar horário com mentor</h2>
+                
+              </div>
+              <div class="containerCentraliza">
+                <input type="date" class="inputGeral" id="inputDataMentor">
+                <input type="time" class="inputGeral" id="inputHoraMentor">
+              </div>
+              <div class="containerCentraliza">
+                <button id="btnSolicitar" class="btnGeral">Solicitar</button>
+              </div>
+            </div>
+            
         </div>
     </div>
 

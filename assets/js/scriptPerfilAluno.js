@@ -1,9 +1,38 @@
 document.addEventListener("DOMContentLoaded", function() {
+    
+    var avaliacao = document.getElementById('avaliacao');
+    var nomeCompleto = document.getElementById('nomeCompleto');
+
+    
+    function fetchAvaliacao() {
+        fetch('/api/avaliacao')
+            .then(response => response.json())
+            .then(data => {
+                avaliacao.textContent = data.avaliacao;
+                console.log('Avaliação:', data.avaliacao);
+            })
+            .catch(error => console.error('Erro ao buscar avaliação:', error));
+    }
+
+    function fetchNomeCompleto() {
+        fetch('/api/nomeCompleto')
+            .then(response => response.json())
+            .then(data => {
+                nomeCompleto.textContent = data.nomeCompleto;
+                console.log('Nome Completo:', data.nomeCompleto);
+            })
+            .catch(error => console.error('Erro ao buscar nome completo:', error));
+    }
+
+    
+    fetchAvaliacao();
+    fetchNomeCompleto();
+    
+    
     var modals = {
         btnEditarInfo: 'modalEditarInfo',
         btnCadastroInteresses: 'modalCadastroInteresses',
         btnRankingAlunos: 'modalRankingAlunos',
-        btnMarcarHorarioMentor: 'modalMarcarHorarioMentor',
         btnEncerrarConta: 'modalEncerrarConta',
         btnProcurarMentor: 'modalProcuraMentor'
     };
@@ -180,35 +209,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     //Fim do modal Selecionar Interesses
 
-    // Modal Marcar Horário com Mentor
-    var btnSolicitar = document.getElementById('btnSolicitar');
-    btnSolicitar.addEventListener('click', function() {
-        var inputDataMentor = document.getElementById('inputDataMentor').value;
-        var inputHoraMentor = document.getElementById('inputHoraMentor').value;
-
-        if (inputDataMentor && inputHoraMentor) {
-            
-            fetch('/api/marcarHorario', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ data: inputDataMentor, hora: inputHoraMentor, mentorId: 'mentorId' })
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert('Horário solicitado para: ' + inputDataMentor + ' às ' + inputHoraMentor);
-                document.getElementById('modalMarcarHorarioMentor').style.display = "none";
-            })
-            .catch(error => console.error('Erro ao marcar horário:', error));
-           
-            alert('Horário solicitado para: ' + inputDataMentor + ' às ' + inputHoraMentor);
-            document.getElementById('modalMarcarHorarioMentor').style.display = "none";
-        } else {
-            alert('Por favor, selecione uma data e hora.');
-        }
-    });
-    // Fim do Modal Marcar Horário com Mentor
 
     //Modal Ranking de Alunos
     function carregarRanking() {
@@ -268,6 +268,7 @@ document.addEventListener("DOMContentLoaded", function() {
         var anosExperiencia = document.getElementById('anosExperiencia').value;
         
         if (competencia && anosExperiencia) {
+            console.log(`Procurando mentores para competência: ${competencia}, anos de experiência: ${anosExperiencia}`);
             
             fetch('/api/procurarMentor', {
                 method: 'POST',
@@ -278,6 +279,7 @@ document.addEventListener("DOMContentLoaded", function() {
             })
             .then(response => response.json())
             .then(mentores => {
+                console.log('Mentores encontrados:', mentores);
                 document.getElementById('filtrosBuscaMentor').style.display = 'none';
                 document.getElementById('resultadosBusca').style.display = 'block';
                 
@@ -292,7 +294,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         <a>Gênero: ${mentor.genero}</a>
                         <a>Competência: ${mentor.competencia}</a>
                         <a>Anos de Experiência: ${mentor.experiencia}</a>
-                        <button class="btnGeral" id="marcaHorario">Marcar horário</button>
+                        <button class="btnGeral marcaHorario" data-mentor-nome="${mentor.nome}">Marcar horário</button>
                     `;
                     listaCards.appendChild(card);
                 });
@@ -301,9 +303,24 @@ document.addEventListener("DOMContentLoaded", function() {
                     mensagem.textContent = 'Nenhum mentor encontrado com os filtros selecionados.';
                     listaCards.appendChild(mensagem);
                 }
+
+                // Adicionar evento de clique aos botões de marcar horário
+                document.querySelectorAll('.marcaHorario').forEach(function(button) {
+                    button.addEventListener('click', function() {
+                        var mentorNome = this.getAttribute('data-mentor-nome');
+                        console.log('Botão "Marcar horário" clicado para:', mentorNome);
+
+                        // Atualizar o título com o nome do mentor selecionado
+                        var titulo = document.querySelector('#divSelecionarHorarioMentor .tituloModal');
+                        titulo.textContent = `Marcar horário com mentor: ${mentorNome}`;
+
+                        // Esconder a lista de cards e mostrar a div de selecionar horário
+                        document.getElementById('resultadosBusca').style.display = 'none';
+                        document.getElementById('divSelecionarHorarioMentor').style.display = 'block';
+                    });
+                });
             })
             .catch(error => console.error('Erro ao procurar mentor:', error));
-            
             
         } else {
             alert('Por favor, selecione uma competência e um período de experiência.');
@@ -313,6 +330,9 @@ document.addEventListener("DOMContentLoaded", function() {
     function resetarModalProcuraMentor() {
         document.getElementById('filtrosBuscaMentor').style.display = 'flex';
         document.getElementById('resultadosBusca').style.display = 'none';
+        document.getElementById('divSelecionarHorarioMentor').style.display = 'none';
     }
+        
+    
     //Fim do modal Procurar Mentor
 });
