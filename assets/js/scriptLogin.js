@@ -152,4 +152,32 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Email inválido");
         }
     });
+
+    document.getElementById("btnFazLogin").addEventListener("click", () => {
+        const emailLogin = document.getElementById("inputEmailLogin").value;
+        const senhaLogin = document.getElementById("inputSenhaLogin").value;
+    
+        if (validarEmail(emailLogin)) {
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email: emailLogin, password: senhaLogin })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Login bem-sucedido') {
+                    sessionStorage.setItem('userEmail', emailLogin);  // Armazenar o email no SessionStorage
+                    window.location.href = "perfil.html";
+                } else {
+                    alert("Email ou senha incorretos");
+                }
+            })
+            .catch(error => console.error('Erro:', error));
+        } else {
+            alert("Email inválido");
+        }
+    });
+    
 });
