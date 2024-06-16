@@ -212,23 +212,24 @@ document.addEventListener("DOMContentLoaded", function() {
 
     //Modal Ranking de Alunos
     function carregarRanking() {
-        
-        fetch('/api/getRanking')
-        .then(response => response.json())
-        .then(data => {
+        fetch('/ranking/mentorados').then(response => response.json())
+        .then((mentoradosData) => {
             var rankingTable = document.getElementById('rankingTable').getElementsByTagName('tbody')[0];
             rankingTable.innerHTML = "";
-
-            data.forEach(function(aluno, index) {
-                var row = rankingTable.insertRow();
-                var cellPosicao = row.insertCell(0);
-                var cellNome = row.insertCell(1);
-                var cellPontuacao = row.insertCell(2);
-
-                cellPosicao.innerHTML = index + 1;
-                cellNome.innerHTML = aluno.nome;
-                cellPontuacao.innerHTML = aluno.pontuacao;
-            });
+    
+            function addRows(data) {
+                data.forEach(function(entry, index) {
+                    var row = rankingTable.insertRow();
+                    var cellPosicao = row.insertCell(0);
+                    var cellNome = row.insertCell(1);
+                    var cellPontuacao = row.insertCell(2);
+    
+                    cellPosicao.innerHTML = index + 1;
+                    cellNome.innerHTML = entry.key.nome;
+                    cellPontuacao.innerHTML = entry.value;
+                });
+            }
+            addRows(mentoradosData, 'Mentorado');
         })
         .catch(error => console.error('Erro ao carregar ranking:', error));
     }

@@ -310,3 +310,23 @@ button.encerrar {
 #rankingTable tbody tr:last-child td:last-child {
   border-bottom-right-radius: 10px;
 }
+
+.listaCards { 
+  display: flex; 
+  flex-wrap: wrap; 
+}
+.card {
+  border: 3px solid #0a4060;
+  padding: 16px;
+  margin: 8px;
+  width: 80%;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+.card a{
+  font-size: small;
+}
