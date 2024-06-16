@@ -283,7 +283,7 @@ document.addEventListener("DOMContentLoaded", function() {
         
         // Exemplo de chamada para o endpoint de solicitação de aluno (recusar)
         
-        fetch('/api/solicitacaoAluno', { // Não sei qual é a chave deste endpoint
+        fetch('', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
