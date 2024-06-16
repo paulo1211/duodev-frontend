@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
         var cpf = document.getElementById("inputCPF").value.replace(/\D/g, '');
 
         var valid = true;
-        var updateData = {};
+        var queryParams = [];
 
         // Verificar se pelo menos um campo foi alterado
         var campoAlterado = false;
@@ -91,13 +91,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 valid = false;
             } else {
                 document.getElementById('inputEmail').classList.remove('inputInvalidado');
-                updateData.email = email;
+                queryParams.push(`email=${encodeURIComponent(email)}`);
             }
         }
 
         if (username.trim() !== "") {
             campoAlterado = true;
-            updateData.username = username;
+            queryParams.push(`nome=${encodeURIComponent(username)}`);
         }
 
         if (newPassword.trim() !== "" || confirmPassword.trim() !== "") {
@@ -112,20 +112,20 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 document.getElementById('inputNewPassword').classList.remove('inputInvalidado');
                 document.getElementById('inputConfirmPassword').classList.remove('inputInvalidado');
-                updateData.newPassword = newPassword;
+                queryParams.push(`senha=${encodeURIComponent(newPassword)}`);
             }
         }
 
         if (genero !== "") {
             campoAlterado = true;
             document.getElementById('selectGenero').classList.remove('inputInvalidado');
-            updateData.genero = genero;
+            queryParams.push(`sexo=${encodeURIComponent(genero)}`);
         }
 
         if (dataNascimento.trim() !== "") {
             campoAlterado = true;
             document.getElementById('inputDataNascimento').classList.remove('inputInvalidado');
-            updateData.dataNascimento = dataNascimento;
+            queryParams.push(`dataNascimento=${encodeURIComponent(dataNascimento)}`);
         }
 
         if (cpf.trim() !== "") {
@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 valid = false;
             } else {
                 document.getElementById('inputCpf').classList.remove('inputInvalidado');
-                updateData.cpf = cpf;
+                queryParams.push(`cpf=${encodeURIComponent(cpf)}`);
             }
         }
 
@@ -146,12 +146,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (valid) {
-            fetch('/api/updateUserInfo', {
-                method: 'POST',
+            // Supondo que você tenha o ID do usuário armazenado em uma variável userId
+            var userId = 123; // Substitua com a lógica para obter o ID do usuário
+
+            var queryString = queryParams.join('&');
+            var url = `/usuario/${userId}?${queryString}`;
+
+            fetch(url, {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(updateData)
+                }
             })
             .then(response => response.json())
             .then(data => {
@@ -201,10 +206,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const selectCompetencias = document.getElementById('selectCompetencias').value;
 
         if (selectCompetencias) {
+            sessionStorage.setItem('userCompetencia', selectCompetencias);  // Armazenar a competência no SessionStorage
             console.log("Competência selecionada:", selectCompetencias);
             alert("Competência salva com sucesso!");
-            closeModal(document.getElementById('modalCadastroCompetencias'));
-            enviarDados('/competencia', 'POST', { competencia: selectCompetencias });
+            document.getElementById('modalCadastroCompetencias').style.display = "none";
+            // Código para enviar dados ao servidor, se necessário...
         } else {
             alert("Por favor, selecione uma competência.");
         }
@@ -281,4 +287,39 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch(error => console.error('Erro ao carregar solicitações:', error));
     };
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const userEmail = sessionStorage.getItem('userEmail');
+        if (userEmail) {
+            console.log('User email:', userEmail);
+            // Você pode usar o email recuperado para buscar mais informações do usuário, por exemplo:
+            // fetch(`/api/userData?email=${userEmail}`).then(...);
+        }
+        
+    });
+    
+    // Modal Encerrar Conta
+    var btnEncerrar = document.getElementById('btnEncerrar');
+
+    btnEncerrar.addEventListener('click', function() {
+        var confirmacao = confirm("Tem certeza de que deseja encerrar sua conta?");
+        if (confirmacao) {
+            fetch('/api/encerrarConta', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ userId: 'userId' })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Conta encerrada com sucesso!');
+                sessionStorage.clear();  // Limpar o SessionStorage
+                document.getElementById('modalEncerrarConta').style.display = "none";
+            })
+            .catch(error => console.error('Erro ao encerrar conta:', error));
+        }
+    });
+    
+    //Fim do Modal Encerrar Conta
 });

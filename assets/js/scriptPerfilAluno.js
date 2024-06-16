@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function() {
         var cpf = document.getElementById("inputCPF").value.replace(/\D/g, '');
 
         var valid = true;
-        var updateData = {};
+        var queryParams = [];
 
         // Verificar se pelo menos um campo foi alterado
         var campoAlterado = false;
@@ -93,13 +93,13 @@ document.addEventListener("DOMContentLoaded", function() {
                 valid = false;
             } else {
                 document.getElementById('inputEmail').classList.remove('inputInvalidado');
-                updateData.email = email;
+                queryParams.push(`email=${encodeURIComponent(email)}`);
             }
         }
 
         if (username.trim() !== "") {
             campoAlterado = true;
-            updateData.username = username;
+            queryParams.push(`nome=${encodeURIComponent(username)}`);
         }
 
         if (newPassword.trim() !== "" || confirmPassword.trim() !== "") {
@@ -114,20 +114,20 @@ document.addEventListener("DOMContentLoaded", function() {
             } else {
                 document.getElementById('inputNewPassword').classList.remove('inputInvalidado');
                 document.getElementById('inputConfirmPassword').classList.remove('inputInvalidado');
-                updateData.newPassword = newPassword;
+                queryParams.push(`senha=${encodeURIComponent(newPassword)}`);
             }
         }
 
         if (genero !== "") {
             campoAlterado = true;
             document.getElementById('selectGenero').classList.remove('inputInvalidado');
-            updateData.genero = genero;
+            queryParams.push(`sexo=${encodeURIComponent(genero)}`);
         }
 
         if (dataNascimento.trim() !== "") {
             campoAlterado = true;
             document.getElementById('inputDataNascimento').classList.remove('inputInvalidado');
-            updateData.dataNascimento = dataNascimento;
+            queryParams.push(`dataNascimento=${encodeURIComponent(dataNascimento)}`);
         }
 
         if (cpf.trim() !== "") {
@@ -138,7 +138,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 valid = false;
             } else {
                 document.getElementById('inputCpf').classList.remove('inputInvalidado');
-                updateData.cpf = cpf;
+                queryParams.push(`cpf=${encodeURIComponent(cpf)}`);
             }
         }
 
@@ -148,12 +148,17 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         if (valid) {
-            fetch('/api/updateUserInfo', {
-                method: 'POST',
+            // Supondo que você tenha o ID do usuário armazenado em uma variável userId
+            var userId = 123; // Substitua com a lógica para obter o ID do usuário
+
+            var queryString = queryParams.join('&');
+            var url = `/usuario/${userId}?${queryString}`;
+
+            fetch(url, {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(updateData)
+                }
             })
             .then(response => response.json())
             .then(data => {
@@ -231,7 +236,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (selectInteresses) {
             
-            fetch('/api/cadastrarInteresses', {
+            fetch('/competencia', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -299,13 +304,13 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(response => response.json())
             .then(data => {
                 alert('Conta encerrada com sucesso!');
+                sessionStorage.clear();  // Limpar o SessionStorage
                 document.getElementById('modalEncerrarConta').style.display = "none";
             })
             .catch(error => console.error('Erro ao encerrar conta:', error));
-            alert('Conta encerrada com sucesso!');
-            document.getElementById('modalEncerrarConta').style.display = "none";
         }
     });
+    
     //Fim do Modal Encerrar Conta
 
     //Modal Procurar Mentor
@@ -380,7 +385,31 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('resultadosBusca').style.display = 'none';
         document.getElementById('divSelecionarHorarioMentor').style.display = 'none';
     }
-        
-    
     //Fim do modal Procurar Mentor
+
+        
+    var btnSolicitar = document.getElementById('btnSolicitar');
+    
+    btnSolicitar.addEventListener('click', function() {
+        var emailMentor = 'blabla@gmail.com';
+        var emailMentorado = 'blabla@yahoo.com.br';
+
+        if (emailMentor && emailMentorado) {
+            var path = `/sessao?emailMentor=${emailMentor}&emailMentorado=${emailMentorado}`;
+            console.log('Sessão criada com URL:', path);
+            alert(`Sessão criada com URL: ${path}`);
+        } else {
+            alert('Por favor, preencha todos os campos.');
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const userEmail = sessionStorage.getItem('userEmail');
+        if (userEmail) {
+            console.log('User email:', userEmail);
+            // Você pode usar o email recuperado para buscar mais informações do usuário, por exemplo:
+            // fetch(`/api/userData?email=${userEmail}`).then(...);
+        }
+    });
+    
 });
