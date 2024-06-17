@@ -223,37 +223,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Modal Ranking
     const carregarRanking = () => {
-        const mentores = [
-            { nome: "João", pontuacao: 150 },
-            { nome: "Maria", pontuacao: 130 },
-            { nome: "Carlos", pontuacao: 120 },
-            { nome: "Ana", pontuacao: 110 },
-            { nome: "Pedro", pontuacao: 100 }
-        ];
-
-        const rankingTable = document.getElementById('rankingTable').getElementsByTagName('tbody')[0];
-        rankingTable.innerHTML = "";
-
-        mentores.forEach((mentor, index) => {
-            const row = rankingTable.insertRow();
-            row.insertCell(0).innerHTML = index + 1;
-            row.insertCell(1).innerHTML = mentor.nome;
-            row.insertCell(2).innerHTML = mentor.pontuacao;
-        });
-
-        fetch('/ranking/mentores', { method: 'GET' })
-            .then(response => response.json())
-            .then(data => {
+        fetch('/ranking/mentores')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao carregar ranking dos mentores.');
+                }
+                return response.json();
+            })
+            .then((mentoradosData) => {
+                var rankingTable = document.getElementById('rankingTable').getElementsByTagName('tbody')[0];
                 rankingTable.innerHTML = "";
-                data.forEach((mentor, index) => {
-                    const row = rankingTable.insertRow();
-                    row.insertCell(0).innerHTML = index + 1;
-                    row.insertCell(1).innerHTML = mentor.nome;
-                    row.insertCell(2).innerHTML = mentor.pontuacao;
+
+                mentoradosData.forEach(function(entry, index) {
+                    var row = rankingTable.insertRow();
+                    var cellPosicao = row.insertCell(0);
+                    var cellNome = row.insertCell(1);
+                    var cellPontuacao = row.insertCell(2);
+
+                    cellPosicao.innerHTML = index + 1;
+                    cellNome.innerHTML = entry.nome;
+                    cellPontuacao.innerHTML = entry.pontuacao;
                 });
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => {
+                console.error('Erro ao carregar ranking:', error);
+        });
     };
+
 
     // Modal Solicitações de Alunos
     const carregarSolicitacoes = () => {
@@ -292,7 +288,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const userEmail = sessionStorage.getItem('userEmail');
         if (userEmail) {
             console.log('User email:', userEmail);
-            // Você pode usar o email recuperado para buscar mais informações do usuário, por exemplo:
             // fetch(`/api/userData?email=${userEmail}`).then(...);
         }
         

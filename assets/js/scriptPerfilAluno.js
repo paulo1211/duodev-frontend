@@ -265,27 +265,33 @@ document.addEventListener("DOMContentLoaded", function() {
 
     //Modal Ranking de Alunos
     function carregarRanking() {
-        fetch('/ranking/mentorados').then(response => response.json())
-        .then((mentoradosData) => {
-            var rankingTable = document.getElementById('rankingTable').getElementsByTagName('tbody')[0];
-            rankingTable.innerHTML = "";
-    
-            function addRows(data) {
-                data.forEach(function(entry, index) {
+        fetch('/ranking/mentorados')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao carregar ranking dos mentorados.');
+                }
+                return response.json();
+            })
+            .then((mentoradosData) => {
+                var rankingTable = document.getElementById('rankingTable').getElementsByTagName('tbody')[0];
+                rankingTable.innerHTML = "";
+
+                mentoradosData.forEach(function(entry, index) {
                     var row = rankingTable.insertRow();
                     var cellPosicao = row.insertCell(0);
                     var cellNome = row.insertCell(1);
                     var cellPontuacao = row.insertCell(2);
-    
+
                     cellPosicao.innerHTML = index + 1;
-                    cellNome.innerHTML = entry.key.nome;
-                    cellPontuacao.innerHTML = entry.value;
+                    cellNome.innerHTML = entry.nome;
+                    cellPontuacao.innerHTML = entry.pontuacao;
                 });
-            }
-            addRows(mentoradosData, 'Mentorado');
-        })
-        .catch(error => console.error('Erro ao carregar ranking:', error));
+            })
+            .catch(error => {
+                console.error('Erro ao carregar ranking:', error);
+        });
     }
+
     //Fim do modal Ranking de Alunos
 
     // Modal Encerrar Conta
