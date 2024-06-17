@@ -68,12 +68,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const email = document.getElementById('inputEmail').value;
         if (validarEmail(email)) {
             try {
-                const response = await fetch('/api/send-code', {
+
+                const requestBody = { email };
+                const response = await fetch('http://localhost:8080/generateToken', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ email })
+                    body: JSON.stringify(requestBody)
                 });
                 const data = await response.json();
 
@@ -128,33 +130,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById("btnFazLogin").addEventListener("click", () => {
-       
-        let dadosLogin = {
-            email: document.getElementById("inputEmailLogin").value,
-            senha: document.getElementById("inputSenhaLogin").value,
-        };
+        const emailLogin = document.getElementById("inputEmailLogin").value;
+        const senhaLogin = document.getElementById("inputSenhaLogin").value;
 
-        if (validarEmail(dadosLogin.email)) {
-            fetch('http://localhost:8080/login', {
+        if (validarEmail(emailLogin)) {
+            fetch('/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(dadosLogin)
+                body: JSON.stringify({ email: emailLogin, password: senhaLogin })
             })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-
-                } else {
-                    throw new Error('Email ou senha incorretos');
-                }
-            
-            })
+            .then(response => response.json())
             .then(data => {
-                console.log("DADOS RECEBIDOS DO FRONT" + data);
-                if (data !== null) {
-                   window.location.href = "escolherPerfil.html";
+                if (data.message === 'Login bem-sucedido') {
+                    window.location.href = "perfil.html";
                 } else {
                     alert("Email ou senha incorretos");
                 }
@@ -166,34 +156,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById("btnFazLogin").addEventListener("click", () => {
-
-        let dadosLogin = {
-            email: document.getElementById("inputEmailLogin").value,
-            senha: document.getElementById("inputSenhaLogin").value,
-        };
+        const emailLogin = document.getElementById("inputEmailLogin").value;
+        const senhaLogin = document.getElementById("inputSenhaLogin").value;
     
-    
-        if (validarEmail(dadosLogin.email)) {
-            fetch('http://localhost:8080/login', {
+        if (validarEmail(emailLogin)) {
+            fetch('/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(dadosLogin)
+                body: JSON.stringify({ email: emailLogin, password: senhaLogin })
             })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-    
-                } else {
-                    alert("Email ou senha incorretos");
-                    throw new Error('Email ou senha incorretos');
-                }
-            })
+            .then(response => response.json())
             .then(data => {
-                if (data !== null) {
-                    sessionStorage.setItem('userEmail', dadosLogin.email);  // Armazenar o email no SessionStorage
-                    window.location.href = "escolherPerfil.html";
+                if (data.message === 'Login bem-sucedido') {
+                    sessionStorage.setItem('userEmail', emailLogin);  // Armazenar o email no SessionStorage
+                    window.location.href = "perfil.html";
                 } else {
                     alert("Email ou senha incorretos");
                 }

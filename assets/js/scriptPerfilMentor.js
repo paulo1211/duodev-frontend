@@ -30,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const modals = {
         btnEditarInfo: 'modalEditarInfo',
         btnCadastroCompetencias: 'modalCadastroCompetencias',
-        btnRankingMentores: 'modalRankingMentores',
         btnEncerrarConta: 'modalEncerrarConta',
         btnSolicitacaoAluno: 'modalSolicitacaoAluno'
     };
@@ -50,9 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const openModal = (btnId, modal) => {
         modal.style.display = "block";
         switch (btnId) {
-            case 'btnRankingMentores':
-                carregarRanking();
-                break;
             case 'btnCadastroCompetencias':
                 carregarCompetencias();
                 break;
@@ -221,34 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Adicione funcionalidades adicionais se necessário
     };
 
-    // Modal Ranking
-    const carregarRanking = () => {
-        fetch('/ranking/mentores')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Erro ao carregar ranking dos mentores.');
-                }
-                return response.json();
-            })
-            .then((mentoradosData) => {
-                var rankingTable = document.getElementById('rankingTable').getElementsByTagName('tbody')[0];
-                rankingTable.innerHTML = "";
-
-                mentoradosData.forEach(function(entry, index) {
-                    var row = rankingTable.insertRow();
-                    var cellPosicao = row.insertCell(0);
-                    var cellNome = row.insertCell(1);
-                    var cellPontuacao = row.insertCell(2);
-
-                    cellPosicao.innerHTML = index + 1;
-                    cellNome.innerHTML = entry.nome;
-                    cellPontuacao.innerHTML = entry.pontuacao;
-                });
-            })
-            .catch(error => {
-                console.error('Erro ao carregar ranking:', error);
-        });
-    };
+    
 
 
     // Modal Solicitações de Alunos

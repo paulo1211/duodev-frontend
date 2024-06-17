@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
         confirmarSenha: document.getElementById('inputConfSenha'),
         cpf: document.getElementById('inputCPF'),
         genero: document.getElementById('selectGenero'),
-        perfil: document.getElementById('selectPerfil'),
         dataNascimento: document.getElementById('inputDataNascimento')
     };
 
@@ -88,14 +87,6 @@ document.addEventListener('DOMContentLoaded', function() {
             toggleClasseInvalido(inputs.genero, false);
         }
 
-        if (!inputs.perfil.value.trim()) {
-            toggleClasseInvalido(inputs.perfil, true);
-            alert("O campo Perfil é obrigatório.");
-            valido = false;
-        } else {
-            toggleClasseInvalido(inputs.perfil, false);
-        }
-
         if (!inputs.dataNascimento.value) {
             toggleClasseInvalido(inputs.dataNascimento, true);
             alert("O campo Data de Nascimento é obrigatório.");
@@ -115,11 +106,10 @@ document.addEventListener('DOMContentLoaded', function() {
             confirmarSenha: inputs.confirmarSenha.value,
             cpf: inputs.cpf.value,
             sexo: inputs.genero.value,
-            perfil: inputs.perfil.value,
-            dataNascimento: inputs.dataNascimento.value,
+            dataNascimento: inputs.dataNascimento.value
         };
 
-        fetch('http://localhost:8080/usuario', {
+        fetch('/usuario', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(dados)

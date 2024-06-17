@@ -32,7 +32,6 @@ document.addEventListener("DOMContentLoaded", function() {
     var modals = {
         btnEditarInfo: 'modalEditarInfo',
         btnCadastroInteresses: 'modalCadastroInteresses',
-        btnRankingAlunos: 'modalRankingAlunos',
         btnEncerrarConta: 'modalEncerrarConta',
         btnProcurarMentor: 'modalProcuraMentor'
     };
