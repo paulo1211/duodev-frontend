@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
 
                 const requestBody = { email };
-                const response = await fetch('http://localhost:8080/generateToken', {
+                const response = await fetch('http://localhost:8080/generateToken/${email}', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
