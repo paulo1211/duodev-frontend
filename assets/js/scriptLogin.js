@@ -142,12 +142,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 body: JSON.stringify(dadosLogin)
             })
-            .then(response => response.json())
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+
+                } else {
+                    throw new Error('Email ou senha incorretos');
+                }
+            
+            })
             .then(data => {
                 console.log("DADOS RECEBIDOS DO FRONT" + data);
                 if (data !== null) {
                    window.location.href = "escolherPerfil.html";
-                } else if (response === "Usuário ou senha inválidos") {
+                } else {
                     alert("Email ou senha incorretos");
                 }
             })
@@ -173,14 +181,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 body: JSON.stringify(dadosLogin)
             })
-            .then(response => response.json())
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+    
+                } else {
+                    alert("Email ou senha incorretos");
+                    throw new Error('Email ou senha incorretos');
+                }
+            })
             .then(data => {
-                console.log("DADOS RECEBIDOS DO FRONT" + data);
                 if (data !== null) {
                     sessionStorage.setItem('userEmail', dadosLogin.email);  // Armazenar o email no SessionStorage
                     window.location.href = "escolherPerfil.html";
-                }
-                else if (response === "Usuário ou senha inválidos"){
+                } else {
                     alert("Email ou senha incorretos");
                 }
             })
