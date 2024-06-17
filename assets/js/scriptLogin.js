@@ -68,12 +68,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const email = document.getElementById('inputEmail').value;
         if (validarEmail(email)) {
             try {
-                const response = await fetch('/api/send-code', {
+
+                const requestBody = { email };
+                const response = await fetch('http://localhost:8080/generateToken', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ email })
+                    body: JSON.stringify(requestBody)
                 });
                 const data = await response.json();
 
