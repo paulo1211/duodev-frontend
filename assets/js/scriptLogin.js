@@ -128,22 +128,26 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById("btnFazLogin").addEventListener("click", () => {
-        const emailLogin = document.getElementById("inputEmailLogin").value;
-        const senhaLogin = document.getElementById("inputSenhaLogin").value;
+       
+        let dadosLogin = {
+            email: document.getElementById("inputEmailLogin").value,
+            senha: document.getElementById("inputSenhaLogin").value,
+        };
 
-        if (validarEmail(emailLogin)) {
-            fetch('/login', {
+        if (validarEmail(dadosLogin.email)) {
+            fetch('http://localhost:8080/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ email: emailLogin, password: senhaLogin })
+                body: JSON.stringify(dadosLogin)
             })
             .then(response => response.json())
             .then(data => {
-                if (data.message === 'Login bem-sucedido') {
-                    window.location.href = "perfil.html";
-                } else {
+                console.log("DADOS RECEBIDOS DO FRONT" + data);
+                if (data !== null) {
+                   window.location.href = "escolherPerfil.html";
+                } else if (response === "Usuário ou senha inválidos") {
                     alert("Email ou senha incorretos");
                 }
             })
@@ -154,23 +158,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById("btnFazLogin").addEventListener("click", () => {
-        const emailLogin = document.getElementById("inputEmailLogin").value;
-        const senhaLogin = document.getElementById("inputSenhaLogin").value;
+
+        let dadosLogin = {
+            email: document.getElementById("inputEmailLogin").value,
+            senha: document.getElementById("inputSenhaLogin").value,
+        };
     
-        if (validarEmail(emailLogin)) {
-            fetch('/login', {
+    
+        if (validarEmail(dadosLogin.email)) {
+            fetch('http://localhost:8080/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ email: emailLogin, password: senhaLogin })
+                body: JSON.stringify(dadosLogin)
             })
             .then(response => response.json())
             .then(data => {
-                if (data.message === 'Login bem-sucedido') {
-                    sessionStorage.setItem('userEmail', emailLogin);  // Armazenar o email no SessionStorage
-                    window.location.href = "perfil.html";
-                } else {
+                console.log("DADOS RECEBIDOS DO FRONT" + data);
+                if (data !== null) {
+                    sessionStorage.setItem('userEmail', dadosLogin.email);  // Armazenar o email no SessionStorage
+                    window.location.href = "escolherPerfil.html";
+                }
+                else if (response === "Usuário ou senha inválidos"){
                     alert("Email ou senha incorretos");
                 }
             })

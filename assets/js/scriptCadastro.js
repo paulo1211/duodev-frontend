@@ -116,10 +116,10 @@ document.addEventListener('DOMContentLoaded', function() {
             cpf: inputs.cpf.value,
             sexo: inputs.genero.value,
             perfil: inputs.perfil.value,
-            dataNascimento: inputs.dataNascimento.value
+            dataNascimento: inputs.dataNascimento.value,
         };
 
-        fetch('/usuario', {
+        fetch('http://localhost:8080/usuario', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(dados)
