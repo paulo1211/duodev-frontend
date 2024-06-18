@@ -442,5 +442,30 @@ document.addEventListener("DOMContentLoaded", function() {
             // fetch(`/api/userData?email=${userEmail}`).then(...);
         }
     });
+    var btnSair = document.getElementById('btnLogOut');
+
+    btnSair.addEventListener('click', function() {
+        sessionStorage.clear();
+        window.location.href = "/index.html";
+    });
+
+    var btnTrocaPerfil = document.getElementById("btnTrocaPerfil");
+
+    btnTrocaPerfil.addEventListener("click", function(){
+        
+        var usuarioLogado2 = {
+            id: usuarioLogado.id,
+            email: usuarioLogado.email,
+            senha: usuarioLogado.senha,
+            nome: usuarioLogado.nome, 
+            sexo: usuarioLogado.sexo, 
+            dataNascimento: usuarioLogado.dataNascimento, 
+            cpf: usuarioLogado.cpf 
+        };
+
+        sessionStorage.setItem('usuarioLogado', JSON.stringify(usuarioLogado2));
+
+        window.location.href = 'perfilAluno.html';
+    })
     
 });

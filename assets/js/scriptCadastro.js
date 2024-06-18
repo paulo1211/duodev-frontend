@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const switchMostraSenha = document.getElementById('showPassword');
+
     const btnLogin = document.getElementById('btnLogin');
     const inputs = {
         nome: document.getElementById('inputNome'),
@@ -9,6 +11,14 @@ document.addEventListener('DOMContentLoaded', function() {
         genero: document.getElementById('selectGenero'),
         dataNascimento: document.getElementById('inputDataNascimento')
     };
+
+    switchMostraSenha.addEventListener('change', () => {
+        if (switchMostraSenha.checked) {
+            inputs.senha.type = 'text';
+        } else {
+            inputs.senha.type = 'password';
+        }
+    });
 
     const pausa = (ms) => new Promise(resolve => setTimeout(resolve, ms));
     const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

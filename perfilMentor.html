@@ -34,9 +34,6 @@
     <div class="user">
         <i class="fa-regular fa-user"></i>
     </div>
-    <div id="divAvaliacao">
-        <h3 id="avalicao">5/5</h3>
-    </div>
     <div id="divNomePerfil">
         <h3 id="nomeCompleto">Nome Completo</h3>
         <h3>Mentor</h3>
@@ -46,9 +43,11 @@
             <button id="btnEditarInfo">Editar informações pessoais</button>
             <button id="btnCadastroCompetencias">Cadastro de competências</button>
             <button id="btnSolicitacaoAluno">Abrir Solicitação de Aluno</button>
+            <button id="btnTrocaPerfil">Trocar para Aluno</button>
             <button id="btnLogOut">Sair</button>
+            <button id="btnEncerrarConta" class="encerrar">Encerrar conta</button>
         </div>
-        <button id="btnEncerrarConta" class="encerrar">Encerrar conta</button>
+        
     </div>
 </main>
 
@@ -79,6 +78,14 @@
       class="inputGeral"
       id="inputNewPassword"
     />
+    <div id="divSwitchSenha">
+      <label class="switch">
+          <input type="checkbox" id="showPassword">
+          <span class="slider round"></span>
+          
+      </label>
+      <span id="labelSwitch">Mostrar Senha</span>
+    </div>
     <input
       type="password"
       placeholder="Confirmar nova senha"

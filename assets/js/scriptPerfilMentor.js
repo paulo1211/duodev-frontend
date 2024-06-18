@@ -4,7 +4,16 @@ var usuarioLogado = JSON.parse(sessionStorage.getItem('usuarioLogado'));
 console.log("USUARIO LOGADO", usuarioLogado);
 
 document.addEventListener("DOMContentLoaded", () => {
-    var avaliacao = document.getElementById('avaliacao');
+    const SwitchMostraSenha = document.getElementById('showPassword');
+    const inputSenha = document.getElementById('inputNewPassword');
+
+    SwitchMostraSenha.addEventListener('change', () => {
+        if (SwitchMostraSenha.checked) {
+            inputSenha.type = 'text';
+        } else {
+            inputSenha.type = 'password';
+        }
+    });
     var nomeCompleto = document.getElementById('nomeCompleto');
 
     var btnSair = document.getElementById('btnLogOut');
@@ -316,4 +325,23 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     //Fim do Modal Encerrar Conta
+
+    var btnTrocaPerfil = document.getElementById("btnTrocaPerfil");
+
+    btnTrocaPerfil.addEventListener("click", function(){
+        
+        var usuarioLogado2 = {
+            id: usuarioLogado.id,
+            email: usuarioLogado.email,
+            senha: usuarioLogado.senha,
+            nome: usuarioLogado.nome, 
+            sexo: usuarioLogado.sexo, 
+            dataNascimento: usuarioLogado.dataNascimento, 
+            cpf: usuarioLogado.cpf 
+        };
+
+        sessionStorage.setItem('usuarioLogado', JSON.stringify(usuarioLogado2));
+
+        window.location.href = 'perfilAluno.html';
+    })
 });

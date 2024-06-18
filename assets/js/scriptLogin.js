@@ -1,4 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const SwitchMostraSenha = document.getElementById('showPassword');
+    const inputSenha = document.getElementById('inputSenhaLogin');
+
+    SwitchMostraSenha.addEventListener('change', () => {
+        if (SwitchMostraSenha.checked) {
+            inputSenha.type = 'text';
+        } else {
+            inputSenha.type = 'password';
+        }
+    });
+
     const modal = document.getElementById('modalEsqSenha');
     const btnEmail = document.getElementById('btnGerarEmail');
     const btnCod = document.getElementById('btnVerCod');
