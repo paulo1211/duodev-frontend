@@ -1,3 +1,4 @@
+//
 var data = JSON.parse(sessionStorage.getItem('usuarioLogado'));
 
 nomeCompleto.innerHTML = data.nome;
