@@ -7,10 +7,10 @@ document.addEventListener('DOMContentLoaded', function() {
         confirmarSenha: document.getElementById('inputConfSenha'),
         cpf: document.getElementById('inputCPF'),
         genero: document.getElementById('selectGenero'),
-        perfil: document.getElementById('selectPerfil'),
         dataNascimento: document.getElementById('inputDataNascimento')
     };
 
+    const pausa = (ms) => new Promise(resolve => setTimeout(resolve, ms));
     const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     function validarEmail(email) {
@@ -88,14 +88,6 @@ document.addEventListener('DOMContentLoaded', function() {
             toggleClasseInvalido(inputs.genero, false);
         }
 
-        if (!inputs.perfil.value.trim()) {
-            toggleClasseInvalido(inputs.perfil, true);
-            alert("O campo Perfil é obrigatório.");
-            valido = false;
-        } else {
-            toggleClasseInvalido(inputs.perfil, false);
-        }
-
         if (!inputs.dataNascimento.value) {
             toggleClasseInvalido(inputs.dataNascimento, true);
             alert("O campo Data de Nascimento é obrigatório.");
@@ -115,7 +107,6 @@ document.addEventListener('DOMContentLoaded', function() {
             confirmarSenha: inputs.confirmarSenha.value,
             cpf: inputs.cpf.value,
             sexo: inputs.genero.value,
-            perfil: inputs.perfil.value,
             dataNascimento: inputs.dataNascimento.value
         };
 
@@ -129,9 +120,11 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => console.error('Erro ao cadastrar:', error));
     }
 
-    btnLogin.addEventListener('click', function() {
+    btnLogin.addEventListener('click', async function() {
         if (validarEntradas()) {
             enviarFormulario();
+            await pausa(3000)
+            window.location.href = "index.html";
             console.log('Formulário válido. Enviando dados para o servidor...');
         }
     });
