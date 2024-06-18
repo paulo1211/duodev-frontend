@@ -21,6 +21,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 carregarInteresses();
             } else if (btnId === 'btnProcurarMentor') {
                 resetarModalProcuraMentor();
+            }else if (btnId === 'btnEditarInfo'){
+                carregaUsuario();
             }
         });
 
@@ -36,9 +38,21 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // Modal Editar Informações
-    var selectGenero = document.getElementById('selectGenero');
-    var inputGeneroOutro = document.getElementById('inputGeneroOutro');
 
+    function carregaUsuario(){
+        const usuarioJSON = sessionStorage.getItem('usuario');
+        if (usuario) {
+            const usuario = JSON.parse(usuarioJSON);
+            document.getElementById('inputEmail').value = usuario.email || '';
+            document.getElementById('inputUsername').value = usuario.nome || '';
+            document.getElementById('inputNewPassword').value = usuario.senha || '';
+            document.getElementById('selectGenero').value = usuario.sexo || '';
+            document.getElementById('inputDataNascimento').value = usuario.dataNascimento || '';
+            document.getElementById("inputCPF").value.replace(/\D/g, '') = usuario.cpf || '';
+        }else{
+            alert("Usuario não logado");
+        }
+    }
 
     var btnSalvar = document.getElementById('btnSalvar');
 
@@ -57,60 +71,79 @@ document.addEventListener("DOMContentLoaded", function() {
         // Verificar se pelo menos um campo foi alterado
         var campoAlterado = false;
 
-        if (email.trim() !== "") {
+        if (email.trim() === "") {
+            document.getElementById('inputEmail').classList.add('inputInvalidado');
+            valid = false;
+        } else if (!validarEmail(email)) {
+            document.getElementById('inputEmail').classList.add('inputInvalidado');
+            valid = false;
+        } else {
+            document.getElementById('inputEmail').classList.remove('inputInvalidado');
+            queryParams.push(`email=${encodeURIComponent(email)}`);
             campoAlterado = true;
-            if (!validarEmail(email)) {
-                document.getElementById('inputEmail').classList.add('inputInvalidado');
-                valid = false;
-            } else {
-                document.getElementById('inputEmail').classList.remove('inputInvalidado');
-                queryParams.push(`email=${encodeURIComponent(email)}`);
-            }
         }
 
-        if (username.trim() !== "") {
-            campoAlterado = true;
+        if (username.trim() === "") {
+            document.getElementById('inputUsername').classList.add('inputInvalidado');
+            valid = false;
+        } else {
+            document.getElementById('inputUsername').classList.remove('inputInvalidado');
             queryParams.push(`nome=${encodeURIComponent(username)}`);
+            campoAlterado = true;
         }
 
-        if (newPassword.trim() !== "" || confirmPassword.trim() !== "") {
+        if (newPassword.trim() === "" || confirmPassword.trim() === "") {
+            document.getElementById('inputNewPassword').classList.add('inputInvalidado');
+            document.getElementById('inputConfirmPassword').classList.add('inputInvalidado');
+            valid = false;
+        } else if (newPassword.length < 6) {
+            alert("A senha deve ter no mínimo 6 caracteres.");
+            valid = false;
+        } else if (newPassword !== confirmPassword) {
+            document.getElementById('inputNewPassword').classList.add('inputInvalidado');
+            document.getElementById('inputConfirmPassword').classList.add('inputInvalidado');
+            valid = false;
+        } else {
+            document.getElementById('inputNewPassword').classList.remove('inputInvalidado');
+            document.getElementById('inputConfirmPassword').classList.remove('inputInvalidado');
+            queryParams.push(`senha=${encodeURIComponent(newPassword)}`);
             campoAlterado = true;
-            if (newPassword.length < 6) {
-                alert("A senha deve ter no mínimo 6 caracteres.");
-                valid = false;
-            } else if (newPassword !== confirmPassword) {
-                document.getElementById('inputNewPassword').classList.add('inputInvalidado');
-                document.getElementById('inputConfirmPassword').classList.add('inputInvalidado');
-                valid = false;
-            } else {
-                document.getElementById('inputNewPassword').classList.remove('inputInvalidado');
-                document.getElementById('inputConfirmPassword').classList.remove('inputInvalidado');
-                queryParams.push(`senha=${encodeURIComponent(newPassword)}`);
-            }
         }
 
-        if (genero !== "") {
-            campoAlterado = true;
+        if (genero === "") {
+            document.getElementById('selectGenero').classList.add('inputInvalidado');
+            valid = false;
+        } else {
             document.getElementById('selectGenero').classList.remove('inputInvalidado');
             queryParams.push(`sexo=${encodeURIComponent(genero)}`);
+            campoAlterado = true;
         }
 
-        if (dataNascimento.trim() !== "") {
-            campoAlterado = true;
+        if (dataNascimento.trim() === "") {
+            document.getElementById('inputDataNascimento').classList.add('inputInvalidado');
+            valid = false;
+        } else {
             document.getElementById('inputDataNascimento').classList.remove('inputInvalidado');
             queryParams.push(`dataNascimento=${encodeURIComponent(dataNascimento)}`);
+            campoAlterado = true;
         }
 
-        if (cpf.trim() !== "") {
+        if (cpf.trim() === "") {
+            document.getElementById('inputCPF').classList.add('inputInvalidado');
+            valid = false;
+        } else if (!validarCPF(cpf)) {
+            document.getElementById('inputCPF').classList.add('inputInvalidado');
+            alert("CPF inválido.");
+            valid = false;
+        } else {
+            document.getElementById('inputCPF').classList.remove('inputInvalidado');
+            queryParams.push(`cpf=${encodeURIComponent(cpf)}`);
             campoAlterado = true;
-            if (!validarCPF(cpf)) {
-                document.getElementById('inputCpf').classList.add('inputInvalidado');
-                alert("CPF inválido.");
-                valid = false;
-            } else {
-                document.getElementById('inputCpf').classList.remove('inputInvalidado');
-                queryParams.push(`cpf=${encodeURIComponent(cpf)}`);
-            }
+        }
+
+        if (!valid) {
+            alert("Por favor, preencha todos os campos corretamente.");
+            return;
         }
 
         if (!campoAlterado) {
@@ -119,11 +152,17 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         if (valid) {
-            // Supondo que você tenha o ID do usuário armazenado em uma variável userId
-            var userId = 123; // Substitua com a lógica para obter o ID do usuário
+            var id
+            const usuarioJSON = sessionStorage.getItem('usuario');
+            if (usuarioJSON) {
+                const usuario = JSON.parse(usuarioJSON);
+                id = usuario.id;
+            }else{
+                id = "";
+            }
 
             var queryString = queryParams.join('&');
-            var url = `/usuario/${userId}?${queryString}`;
+            var url = `/usuario/${id}?${queryString}`;
 
             fetch(url, {
                 method: 'PUT',
@@ -140,8 +179,6 @@ document.addEventListener("DOMContentLoaded", function() {
             .catch(error => {
                 console.error('Erro ao salvar informações:', error);
             });
-        } else {
-            alert("Por favor, preencha todos os campos corretamente.");
         }
     });
 
