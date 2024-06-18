@@ -12,13 +12,15 @@ document.addEventListener("DOMContentLoaded", () => {
     Object.keys(modals).forEach(btnId => {
         const btn = document.getElementById(btnId);
         const modal = document.getElementById(modals[btnId]);
-        const span = modal.getElementsByClassName("close")[0];
+        if (btn && modal) {
+            const span = modal.getElementsByClassName("close")[0];
 
-        btn.addEventListener('click', () => openModal(btnId, modal));
-        span.addEventListener('click', () => closeModal(modal));
-        window.addEventListener('click', (event) => {
-            if (event.target === modal) closeModal(modal);
-        });
+            btn.addEventListener('click', () => openModal(btnId, modal));
+            if (span) span.addEventListener('click', () => closeModal(modal));
+            window.addEventListener('click', (event) => {
+                if (event.target === modal) closeModal(modal);
+            });
+        }
     });
 
     const openModal = (btnId, modal) => {
@@ -30,6 +32,9 @@ document.addEventListener("DOMContentLoaded", () => {
             case 'btnSolicitacaoAluno':
                 carregarSolicitacoes();
                 break;
+            case 'btnEditarInfo':
+                carregaUsuario();
+                break;
         }
     };
 
@@ -40,6 +45,22 @@ document.addEventListener("DOMContentLoaded", () => {
     // Modal Editar Informações
     var btnSalvar = document.getElementById('btnSalvar');
 
+    function carregaUsuario(){
+        const usuarioJSON = sessionStorage.getItem('usuario');
+        if (usuarioJSON) {
+            const usuario = JSON.parse(usuarioJSON);
+            document.getElementById('inputEmail').value = usuario.email || '';
+            document.getElementById('inputUsername').value = usuario.nome || '';
+            document.getElementById('inputNewPassword').value = usuario.senha || '';
+            document.getElementById('selectGenero').value = usuario.sexo || '';
+            document.getElementById('inputDataNascimento').value = usuario.dataNascimento || '';
+            document.getElementById("inputCPF").value = usuario.cpf || '';
+        } else {
+            alert("Usuário não logado");
+        }
+    }
+
+    
     btnSalvar.addEventListener('click', function() {
         var email = document.getElementById('inputEmail').value;
         var username = document.getElementById('inputUsername').value;
@@ -55,60 +76,79 @@ document.addEventListener("DOMContentLoaded", () => {
         // Verificar se pelo menos um campo foi alterado
         var campoAlterado = false;
 
-        if (email.trim() !== "") {
+        if (email.trim() === "") {
+            document.getElementById('inputEmail').classList.add('inputInvalidado');
+            valid = false;
+        } else if (!validarEmail(email)) {
+            document.getElementById('inputEmail').classList.add('inputInvalidado');
+            valid = false;
+        } else {
+            document.getElementById('inputEmail').classList.remove('inputInvalidado');
+            queryParams.push(`email=${encodeURIComponent(email)}`);
             campoAlterado = true;
-            if (!validarEmail(email)) {
-                document.getElementById('inputEmail').classList.add('inputInvalidado');
-                valid = false;
-            } else {
-                document.getElementById('inputEmail').classList.remove('inputInvalidado');
-                queryParams.push(`email=${encodeURIComponent(email)}`);
-            }
         }
 
-        if (username.trim() !== "") {
-            campoAlterado = true;
+        if (username.trim() === "") {
+            document.getElementById('inputUsername').classList.add('inputInvalidado');
+            valid = false;
+        } else {
+            document.getElementById('inputUsername').classList.remove('inputInvalidado');
             queryParams.push(`nome=${encodeURIComponent(username)}`);
+            campoAlterado = true;
         }
 
-        if (newPassword.trim() !== "" || confirmPassword.trim() !== "") {
+        if (newPassword.trim() === "" || confirmPassword.trim() === "") {
+            document.getElementById('inputNewPassword').classList.add('inputInvalidado');
+            document.getElementById('inputConfirmPassword').classList.add('inputInvalidado');
+            valid = false;
+        } else if (newPassword.length < 6) {
+            alert("A senha deve ter no mínimo 6 caracteres.");
+            valid = false;
+        } else if (newPassword !== confirmPassword) {
+            document.getElementById('inputNewPassword').classList.add('inputInvalidado');
+            document.getElementById('inputConfirmPassword').classList.add('inputInvalidado');
+            valid = false;
+        } else {
+            document.getElementById('inputNewPassword').classList.remove('inputInvalidado');
+            document.getElementById('inputConfirmPassword').classList.remove('inputInvalidado');
+            queryParams.push(`senha=${encodeURIComponent(newPassword)}`);
             campoAlterado = true;
-            if (newPassword.length < 6) {
-                alert("A senha deve ter no mínimo 6 caracteres.");
-                valid = false;
-            } else if (newPassword !== confirmPassword) {
-                document.getElementById('inputNewPassword').classList.add('inputInvalidado');
-                document.getElementById('inputConfirmPassword').classList.add('inputInvalidado');
-                valid = false;
-            } else {
-                document.getElementById('inputNewPassword').classList.remove('inputInvalidado');
-                document.getElementById('inputConfirmPassword').classList.remove('inputInvalidado');
-                queryParams.push(`senha=${encodeURIComponent(newPassword)}`);
-            }
         }
 
-        if (genero !== "") {
-            campoAlterado = true;
+        if (genero === "") {
+            document.getElementById('selectGenero').classList.add('inputInvalidado');
+            valid = false;
+        } else {
             document.getElementById('selectGenero').classList.remove('inputInvalidado');
             queryParams.push(`sexo=${encodeURIComponent(genero)}`);
+            campoAlterado = true;
         }
 
-        if (dataNascimento.trim() !== "") {
-            campoAlterado = true;
+        if (dataNascimento.trim() === "") {
+            document.getElementById('inputDataNascimento').classList.add('inputInvalidado');
+            valid = false;
+        } else {
             document.getElementById('inputDataNascimento').classList.remove('inputInvalidado');
             queryParams.push(`dataNascimento=${encodeURIComponent(dataNascimento)}`);
+            campoAlterado = true;
         }
 
-        if (cpf.trim() !== "") {
+        if (cpf.trim() === "") {
+            document.getElementById('inputCPF').classList.add('inputInvalidado');
+            valid = false;
+        } else if (!validarCPF(cpf)) {
+            document.getElementById('inputCPF').classList.add('inputInvalidado');
+            alert("CPF inválido.");
+            valid = false;
+        } else {
+            document.getElementById('inputCPF').classList.remove('inputInvalidado');
+            queryParams.push(`cpf=${encodeURIComponent(cpf)}`);
             campoAlterado = true;
-            if (!validarCPF(cpf)) {
-                document.getElementById('inputCpf').classList.add('inputInvalidado');
-                alert("CPF inválido.");
-                valid = false;
-            } else {
-                document.getElementById('inputCpf').classList.remove('inputInvalidado');
-                queryParams.push(`cpf=${encodeURIComponent(cpf)}`);
-            }
+        }
+
+        if (!valid) {
+            alert("Por favor, preencha todos os campos corretamente.");
+            return;
         }
 
         if (!campoAlterado) {
@@ -117,11 +157,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (valid) {
-            // Supondo que você tenha o ID do usuário armazenado em uma variável userId
-            var userId = 123; // Substitua com a lógica para obter o ID do usuário
+            var id
+            const usuarioJSON = sessionStorage.getItem('usuario');
+            if (usuarioJSON) {
+                const usuario = JSON.parse(usuarioJSON);
+                id = usuario.id;
+            }else{
+                id = "";
+            }
 
             var queryString = queryParams.join('&');
-            var url = `/usuario/${userId}?${queryString}`;
+            var url = `/usuario/${id}?${queryString}`;
 
             fetch(url, {
                 method: 'PUT',
@@ -138,10 +184,9 @@ document.addEventListener("DOMContentLoaded", () => {
             .catch(error => {
                 console.error('Erro ao salvar informações:', error);
             });
-        } else {
-            alert("Por favor, preencha todos os campos corretamente.");
         }
     });
+    
 
     const validarEmail = (email) => {
         const re = /^(([^<>()\[\]\.,;:\s@"]+(\.[^<>()\[\]\.,;:\s@"]+)*)|(".+"))@(([^<>()[\]\.,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,})$/i;
@@ -168,94 +213,4 @@ document.addEventListener("DOMContentLoaded", () => {
         cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d{1,2})$/, '$1-$2');
         e.target.value = cpf;
     });
-
-    // Modal Selecionar Competências
-    const carregarCompetencias = () => {
-        fetch('/competencias', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(competencias => {
-            const selectCompetencias = document.getElementById('selectCompetencias');
-            selectCompetencias.innerHTML = '<option value="">Selecione uma competência</option>'; // Limpar o select e adicionar a opção padrão
-
-            competencias.forEach(competencia => {
-                const option = document.createElement('option');
-                option.value = competencia.id; // Assumindo que a competência possui um ID
-                option.textContent = competencia.nome; // Assumindo que a competência possui um nome
-                selectCompetencias.appendChild(option);
-            });
-        })
-        .catch(error => console.error('Erro ao carregar competências:', error));
-    };
-
-    // Função para adicionar competência selecionada
-    const adicionarCompetenciasMentor = () => {
-        const selectCompetencias = document.getElementById('selectCompetencias').value;
-
-        if (selectCompetencias) {
-            fetch('/api/adicionarCompetencia', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ competenciaId: selectCompetencias })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log("Competência selecionada:", data);
-                alert("Competência salva com sucesso!");
-                document.getElementById('modalCadastroCompetencias').style.display = "none";
-            })
-            .catch(error => {
-                console.error('Erro ao salvar competência:', error);
-            });
-        } else {
-            alert("Por favor, selecione uma competência.");
-        }
-    };
-
-    // Adicionar evento para salvar competência
-    const btnSalvarCompetencia = document.getElementById('btnAdicionarCompetencias');
-    if (btnSalvarCompetencia) {
-        btnSalvarCompetencia.addEventListener('click', adicionarCompetenciasMentor);
-    } else {
-        console.error('Botão "Adicionar Competências" não encontrado.');
-    }
-
-    document.addEventListener("DOMContentLoaded", function() {
-        const userEmail = sessionStorage.getItem('userEmail');
-        if (userEmail) {
-            console.log('User email:', userEmail);
-            // fetch(`/api/userData?email=${userEmail}`).then(...);
-        }
-    });
-
-    // Modal Encerrar Conta
-    var btnEncerrar = document.getElementById('btnEncerrar');
-
-    btnEncerrar.addEventListener('click', function() {
-        var confirmacao = confirm("Tem certeza de que deseja encerrar sua conta?");
-        if (confirmacao) {
-            fetch('/api/encerrarConta', {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ userId: 'userId' })
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert('Conta encerrada com sucesso!');
-                sessionStorage.clear();  // Limpar o SessionStorage
-                document.getElementById('modalEncerrarConta').style.display = "none";
-            })
-            .catch(error => console.error('Erro ao encerrar conta:', error));
-        }
-    });
-
-    //Fim do Modal Encerrar Conta
 });

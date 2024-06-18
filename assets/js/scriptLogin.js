@@ -144,6 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.json())
             .then(data => {
                 if (data.message === 'Login bem-sucedido') {
+                    sessionStorage.setItem('usuario', JSON.stringify(data.usuario));
                     window.location.href = "escolherPerfil.html";
                 } else {
                     alert("Email ou senha incorretos");
