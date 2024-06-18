@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
 
                 const requestBody = { email };
-                const response = await fetch('http://localhost:8080/generateToken/${email}', {
+                const response = await fetch(`http://localhost:8080/generateToken?email=${email}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -81,6 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (response.ok) {
                     receivedCode = data.code; // Armazenar o código recebido do backend
+                    console.log("Código recebido: " + receivedCode);
                     displayMessage("msg", "Código enviado para o email");
                     await pausa(3000);
                     document.getElementById("soApareceQuandoMandarEmail").style.display = "flex";
@@ -130,21 +131,43 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById("btnFazLogin").addEventListener("click", () => {
-        const emailLogin = document.getElementById("inputEmailLogin").value;
-        const senhaLogin = document.getElementById("inputSenhaLogin").value;
+       
+        let dadosLogin = {
+            email: document.getElementById("inputEmailLogin").value,
+            senha: document.getElementById("inputSenhaLogin").value,
+        };
 
-        if (validarEmail(emailLogin)) {
-            fetch('/login', {
+        
+    });
+
+    document.getElementById("btnFazLogin").addEventListener("click", () => {
+
+        let dadosLogin = {
+            email: document.getElementById("inputEmailLogin").value,
+            senha: document.getElementById("inputSenhaLogin").value,
+        };
+    
+    
+        if (validarEmail(dadosLogin.email)) {
+            fetch('http://localhost:8080/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ email: emailLogin, password: senhaLogin })
+                body: JSON.stringify(dadosLogin)
             })
-            .then(response => response.json())
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+    
+                } else {
+                    alert("Email ou senha incorretos");
+                    throw new Error('Email ou senha incorretos');
+                }
+            })
             .then(data => {
-                if (data.message === 'Login bem-sucedido') {
-                    sessionStorage.setItem('usuario', JSON.stringify(data.usuario));
+                if (data !== null) {
+                    sessionStorage.setItem('userEmail', dadosLogin.email);  // Armazenar o email no SessionStorage
                     window.location.href = "escolherPerfil.html";
                 } else {
                     alert("Email ou senha incorretos");
@@ -155,4 +178,5 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Email inválido");
         }
     });
+    
 });
