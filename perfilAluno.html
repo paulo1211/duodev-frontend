@@ -33,9 +33,6 @@
       <div class="user">
         <i class="fa-regular fa-user"></i>
       </div>
-      <div id="divAvaliacao">
-        <h3 id="avaliacao">5/5</h3>
-      </div>
       <div id="divNomePerfil">
         <h3 id="nomeCompleto">Nome Completo</h3>
         <h3>Aluno</h3>
@@ -45,11 +42,10 @@
           <button id="btnEditarInfo">Editar informações pessoais</button>
           <button id="btnCadastroInteresses">Cadastro de interesses</button>
           <button id="btnProcurarMentor">Procurar mentores</button>
-          <a href="index.html">
-            <button id="btnLogOut">Sair</button>
-          </a>
+          <button id="btnTrocaPerfil">Trocar para Mentor</button>
+          <button id="btnLogOut">Sair</button>
+          <button id="btnEncerrarConta" class="encerrar">Encerrar conta</button>
         </div>
-        <button id="btnEncerrarConta" class="encerrar">Encerrar conta</button>
       </div>
     </main>
 
@@ -71,14 +67,31 @@
             class="inputGeral"
             id="inputUsername"
           />
-          <input type="date" class="inputGeral" placeholder="Data de Nascimento" id="inputDataNascimento">
-          <input type="text" class="inputGeral" placeholder="CPF" id="inputCPF">
+          <input
+            type="date"
+            class="inputGeral"
+            placeholder="Data de Nascimento"
+            id="inputDataNascimento"
+          />
+          <input
+            type="text"
+            class="inputGeral"
+            placeholder="CPF"
+            id="inputCPF"
+          />
           <input
             type="password"
             placeholder="Nova senha"
             class="inputGeral"
             id="inputNewPassword"
           />
+          <div id="divSwitchSenha">
+            <label class="switch">
+              <input type="checkbox" id="showPassword" />
+              <span class="slider round"></span>
+            </label>
+            <span id="labelSwitch">Mostrar Senha</span>
+          </div>
           <input
             type="password"
             placeholder="Confirmar nova senha"
@@ -96,7 +109,7 @@
             </option>
           </select>
         </div>
-        
+
         <div class="containerCentraliza">
           <button class="btnGeral" id="btnSalvar">SALVAR</button>
         </div>
@@ -109,7 +122,7 @@
         <div class="containerCentraliza">
           <h2 class="tituloModal">Selecione seus interesses</h2>
         </div>
-        
+
         <div class="centraliza">
           <select class="inputGeral" id="selectInteresses">
             <option value="" class="optSel">Selecione uma linguagem</option>
@@ -121,83 +134,81 @@
           </select>
         </div>
         <div class="containerCentraliza">
-          <button class="btnGeral" id="btnSalvarInteresse">Salvar interesse</button>
+          <button class="btnGeral" id="btnSalvarInteresse">
+            Salvar interesse
+          </button>
         </div>
       </div>
     </div>
-    
 
     <div id="modalRankingAlunos" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <div class="containerCentraliza">
-              <h2 class="tituloModal">Ranking dos alunos</h2>
-            </div>
-              
-            <table class="ranking-table" id="rankingTable">
-                <thead>
-                    <tr>
-                        <th>Posição</th>
-                        <th>Nome</th>
-                        <th>Avaliação</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Linhas de ranking serão carregadas dinamicamente -->
-                </tbody>
-            </table>
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="containerCentraliza">
+          <h2 class="tituloModal">Ranking dos alunos</h2>
         </div>
+
+        <table class="ranking-table" id="rankingTable">
+          <thead>
+            <tr>
+              <th>Posição</th>
+              <th>Nome</th>
+              <th>Avaliação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Linhas de ranking serão carregadas dinamicamente -->
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <div id="modalProcuraMentor" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <div class="centraliza" id="filtrosBuscaMentor">
-              <h2 class="tituloModal">Procure seu mentor</h2>
-            
-              <label>Competência:</label>
-              <select id="competencia" class="inputGeral">
-                  <option value="">Selecione uma competência</option>
-                  <option value="Java">Java</option>
-                  <option value="JavaScript">JavaScript</option>
-                  <option value="Python">Python</option>
-                  <option value="C++">C++</option>
-                  <option value="C#">C#</option>
-              </select>
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="centraliza" id="filtrosBuscaMentor">
+          <h2 class="tituloModal">Procure seu mentor</h2>
 
-              <label>Anos de experiência:</label>
-              <select id="anosExperiencia" class="inputGeral">
-                  <option value="">Selecione um período</option>
-                  <option value="1-2">1-2</option>
-                  <option value="2-4">2-4</option>
-                  <option value="5-10">5-10</option>
-                  <option value="10+">10+</option>
-              </select>
+          <label>Competência:</label>
+          <select id="competencia" class="inputGeral">
+            <option value="">Selecione uma competência</option>
+            <option value="Java">Java</option>
+            <option value="JavaScript">JavaScript</option>
+            <option value="Python">Python</option>
+            <option value="C++">C++</option>
+            <option value="C#">C#</option>
+          </select>
 
-              <button class="btnGeral" id="btnProcurar">PROCURAR</button>
-            </div>
-            
+          <label>Anos de experiência:</label>
+          <select id="anosExperiencia" class="inputGeral">
+            <option value="">Selecione um período</option>
+            <option value="1-2">1-2</option>
+            <option value="2-4">2-4</option>
+            <option value="5-10">5-10</option>
+            <option value="10+">10+</option>
+          </select>
 
-            <div id="resultadosBusca">
-                <div class="listaCards">
-                  <!-- Cards de exemplo, que serão gerados dinamicamente -->
-                </div>
-            </div>
-            <div id="divSelecionarHorarioMentor">
-              <div class="containerCentraliza">
-                <h2 class="tituloModal">Marcar horário com mentor</h2>
-                
-              </div>
-              <div class="containerCentraliza">
-                <input type="date" class="inputGeral" id="inputDataMentor">
-                <input type="time" class="inputGeral" id="inputHoraMentor">
-              </div>
-              <div class="containerCentraliza">
-                <button id="btnSolicitar" class="btnGeral">Solicitar</button>
-              </div>
-            </div>
-            
+          <button class="btnGeral" id="btnProcurar">PROCURAR</button>
         </div>
+
+        <div id="resultadosBusca">
+          <div class="listaCards">
+            <!-- Cards de exemplo, que serão gerados dinamicamente -->
+          </div>
+        </div>
+        <div id="divSelecionarHorarioMentor">
+          <div class="containerCentraliza">
+            <h2 class="tituloModal">Marcar horário com mentor</h2>
+          </div>
+          <div class="containerCentraliza">
+            <input type="date" class="inputGeral" id="inputDataMentor" />
+            <input type="time" class="inputGeral" id="inputHoraMentor" />
+          </div>
+          <div class="containerCentraliza">
+            <button id="btnSolicitar" class="btnGeral">Solicitar</button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div id="modalEncerrarConta" class="modal">
