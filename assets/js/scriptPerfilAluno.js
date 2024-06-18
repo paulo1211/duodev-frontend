@@ -293,7 +293,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ interesse: selectInteresses })
+                body: JSON.stringify({ interesse: selectInteresses }) 
             })
             .then(response => response.json())
             .then(data => {
@@ -346,21 +346,12 @@ document.addEventListener("DOMContentLoaded", function() {
         var competencia = document.getElementById('competencia').value;
         var anosExperiencia = document.getElementById('anosExperiencia').value;
         
- 
-        
-
-
-
-        if (competencia && anosExperiencia) {
+        if (competencia) {
             console.log(`Procurando mentores para competência: ${competencia}, anos de experiência: ${anosExperiencia}`);
             
-            fetch('/api/procurarMentor', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ competencia, anosExperiencia })
-            })
+            fetch('http://localhost:8080/usuario/competencia/' + competencia + '?' + new URLSearchParams({
+                anosExpMin: anosExperiencia
+            }))
             .then(response => response.json())
             .then(mentores => {
                 console.log('Mentores encontrados:', mentores);
@@ -370,17 +361,20 @@ document.addEventListener("DOMContentLoaded", function() {
                 var listaCards = document.querySelector('.listaCards');
                 listaCards.innerHTML = '';
                 mentores.forEach(function(mentor) {
-                    var card = document.createElement('div');
-                    card.className = 'card';
-                    card.innerHTML = `
-                        <h3>${mentor.nome}</h3>
-                        <a>Idade: ${mentor.idade}</a>
-                        <a>Gênero: ${mentor.genero}</a>
-                        <a>Competência: ${mentor.competencia}</a>
-                        <a>Anos de Experiência: ${mentor.experiencia}</a>
-                        <button class="btnGeral marcaHorario" data-mentor-nome="${mentor.nome}">Marcar horário</button>
-                    `;
-                    listaCards.appendChild(card);
+                    if (usuarioLogado.id != mentor.usuario.id)
+                    {
+                        var card = document.createElement('div');
+                        card.className = 'card';
+                        card.innerHTML = `
+                            <h3>${mentor.usuario.nome}</h3>
+                            <a>e-mail: ${mentor.usuario.email}</a>
+                            <a>Gênero: ${mentor.usuario.sexo.toLowerCase()}</a>
+                            <a>Competência: ${mentor.competencia.nome}</a>
+                            <a>Anos de Experiência: ${mentor.anosExperiencia}</a>
+                            <button class="btnGeral marcaHorario" data-mentor-nome="${mentor.usuario.nome}" data-mentor-id="${mentor.usuario.id}"  data-mentor-email="${mentor.usuario.email}">Marcar horário</button>
+                        `;
+                        listaCards.appendChild(card);
+                    }
                 });
                 if (mentores.length === 0) {
                     var mensagem = document.createElement('p');
@@ -392,11 +386,16 @@ document.addEventListener("DOMContentLoaded", function() {
                 document.querySelectorAll('.marcaHorario').forEach(function(button) {
                     button.addEventListener('click', function() {
                         var mentorNome = this.getAttribute('data-mentor-nome');
-                        console.log('Botão "Marcar horário" clicado para:', mentorNome);
+                        var mentorId = this.getAttribute('data-mentor-id');
+                        var mentorEmail = this.getAttribute('data-mentor-email');
+                        console.log('Botão "Marcar horário" solicitado à:', mentorNome);
 
                         // Atualizar o título com o nome do mentor selecionado
                         var titulo = document.querySelector('#divSelecionarHorarioMentor .tituloModal');
                         titulo.textContent = `Marcar horário com mentor: ${mentorNome}`;
+
+                        document.getElementById('inputEmailMentor').value = mentorEmail;
+                        document.getElementById('inputIdMentor').value = mentorId;
 
                         // Esconder a lista de cards e mostrar a div de selecionar horário
                         document.getElementById('resultadosBusca').style.display = 'none';
@@ -407,7 +406,7 @@ document.addEventListener("DOMContentLoaded", function() {
             .catch(error => console.error('Erro ao procurar mentor:', error));
             
         } else {
-            alert('Por favor, selecione uma competência e um período de experiência.');
+            alert('Por favor, selecione uma competência.');
         }
     });
 
@@ -420,17 +419,58 @@ document.addEventListener("DOMContentLoaded", function() {
 
         
     var btnSolicitar = document.getElementById('btnSolicitar');
+
+    function formatDate(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+    function formatTime(date) {
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        return `${hours}:${minutes}`;
+    }
     
     btnSolicitar.addEventListener('click', function() {
-        var emailMentor = 'blabla@gmail.com';
-        var emailMentorado = 'blabla@yahoo.com.br';
+        var emailMentor = document.getElementById('inputEmailMentor').value;
+        var emailMentorado = usuarioLogado.email;
 
-        if (emailMentor && emailMentorado) {
-            var path = `/sessao?emailMentor=${emailMentor}&emailMentorado=${emailMentorado}`;
-            console.log('Sessão criada com URL:', path);
-            alert(`Sessão criada com URL: ${path}`);
+        const dataInicial = inputDataMentor.value;
+        const horaInicial = inputHoraMentor.value;
+        const dataHoraInicial = new Date(`${dataInicial}T${horaInicial}`);
+        const dataHoraInicialFormatada = `${formatDate(dataHoraInicial)} ${formatTime(dataHoraInicial)}`;
+        
+        const dataHoraFinal = new Date(dataHoraInicial);
+        dataHoraFinal.setHours(dataHoraFinal.getHours() + 1);
+        const dataHoraFinalFormatada = `${formatDate(dataHoraFinal)} ${formatTime(dataHoraFinal)}`;
+
+        if (emailMentor && emailMentorado && dataHoraFinal.getDate() && dataHoraInicial.getDate()) {
+            fetch('http://localhost:8080/sessao', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 
+                    dataHoraInicial: dataHoraInicialFormatada,
+                    dataHoraFinal: dataHoraFinalFormatada,
+                    emailMentor: emailMentor,
+                    emailMentorado: emailMentorado
+                }) 
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Sessão salva:", data);
+                alert("Sessão salva com sucesso! Um convite foi enviado ao mentor.");
+                document.getElementById('divSelecionarHorarioMentor').style.display = "none";
+                document.getElementById('resultadosBusca').style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Erro ao salvar sessão:', error);
+            });
         } else {
-            alert('Por favor, preencha todos os campos.');
+            alert('Por favor, selecione um horário válido.');
         }
     });
 
