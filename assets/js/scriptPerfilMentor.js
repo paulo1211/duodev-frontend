@@ -1,36 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
     var avaliacao = document.getElementById('avaliacao');
     var nomeCompleto = document.getElementById('nomeCompleto');
-
-    
-    /*function fetchAvaliacao() {
-        fetch('/api/avaliacao')
-            .then(response => response.json())
-            .then(data => {
-                avaliacao.textContent = data.avaliacao;
-                console.log('Avaliação:', data.avaliacao);
-            })
-            .catch(error => console.error('Erro ao buscar avaliação:', error));
-    }
-
-    function fetchNomeCompleto() {
-        fetch('/api/nomeCompleto')
-            .then(response => response.json())
-            .then(data => {
-                nomeCompleto.textContent = data.nomeCompleto;
-                console.log('Nome Completo:', data.nomeCompleto);
-            })
-            .catch(error => console.error('Erro ao buscar nome completo:', error));
-    }
-
-    
-    fetchAvaliacao();
-    fetchNomeCompleto();*/
     
     const modals = {
         btnEditarInfo: 'modalEditarInfo',
         btnCadastroCompetencias: 'modalCadastroCompetencias',
-        btnRankingMentores: 'modalRankingMentores',
         btnEncerrarConta: 'modalEncerrarConta',
         btnSolicitacaoAluno: 'modalSolicitacaoAluno'
     };
@@ -50,9 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const openModal = (btnId, modal) => {
         modal.style.display = "block";
         switch (btnId) {
-            case 'btnRankingMentores':
-                carregarRanking();
-                break;
             case 'btnCadastroCompetencias':
                 carregarCompetencias();
                 break;
@@ -199,90 +170,61 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Modal Selecionar Competências
-    const btnAdicionarCompetencias = document.getElementById('btnAdicionarCompetencias');
-    btnAdicionarCompetencias.addEventListener('click', adicionarCompetencias);
-
-    const adicionarCompetencias = () => {
-        const selectCompetencias = document.getElementById('selectCompetencias').value;
-
-        if (selectCompetencias) {
-            sessionStorage.setItem('userCompetencia', selectCompetencias);  // Armazenar a competência no SessionStorage
-            console.log("Competência selecionada:", selectCompetencias);
-            alert("Competência salva com sucesso!");
-            document.getElementById('modalCadastroCompetencias').style.display = "none";
-            // Código para enviar dados ao servidor, se necessário...
-        } else {
-            alert("Por favor, selecione uma competência.");
-        }
-    };
-
-    // Função para carregar Competências (placeholder)
     const carregarCompetencias = () => {
-        // Adicione funcionalidades adicionais se necessário
-    };
-
-    // Modal Ranking
-    const carregarRanking = () => {
-        fetch('/ranking/mentores')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Erro ao carregar ranking dos mentores.');
-                }
-                return response.json();
-            })
-            .then((mentoradosData) => {
-                var rankingTable = document.getElementById('rankingTable').getElementsByTagName('tbody')[0];
-                rankingTable.innerHTML = "";
-
-                mentoradosData.forEach(function(entry, index) {
-                    var row = rankingTable.insertRow();
-                    var cellPosicao = row.insertCell(0);
-                    var cellNome = row.insertCell(1);
-                    var cellPontuacao = row.insertCell(2);
-
-                    cellPosicao.innerHTML = index + 1;
-                    cellNome.innerHTML = entry.nome;
-                    cellPontuacao.innerHTML = entry.pontuacao;
-                });
-            })
-            .catch(error => {
-                console.error('Erro ao carregar ranking:', error);
-        });
-    };
-
-
-    // Modal Solicitações de Alunos
-    const carregarSolicitacoes = () => {
-        fetch('/api/carregarSolicitacoes', {
+        fetch('/competencias', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
         })
         .then(response => response.json())
-        .then(solicitacoes => {
-            var listaCards = document.querySelector('.listaCards');
-            listaCards.innerHTML = '';
-            solicitacoes.forEach(function(solicitacao) {
-                var card = document.createElement('div');
-                card.className = 'solicitacao-card card';
-                card.innerHTML = `
-                    <h3>Solicitação ${solicitacao.id}</h3>
-                    <p>ID: ${solicitacao.id}</p>
-                    <p>Email do Aluno: ${solicitacao.email}</p>
-                    <p>Data de Início: ${solicitacao.dataInicio}</p>
-                    <p>Data do Fim: ${solicitacao.dataFim}</p>
-                `;
-                listaCards.appendChild(card);
+        .then(competencias => {
+            const selectCompetencias = document.getElementById('selectCompetencias');
+            selectCompetencias.innerHTML = '<option value="">Selecione uma competência</option>'; // Limpar o select e adicionar a opção padrão
+
+            competencias.forEach(competencia => {
+                const option = document.createElement('option');
+                option.value = competencia.id; // Assumindo que a competência possui um ID
+                option.textContent = competencia.nome; // Assumindo que a competência possui um nome
+                selectCompetencias.appendChild(option);
             });
-            if (solicitacoes.length === 0) {
-                var mensagem = document.createElement('p');
-                mensagem.textContent = 'Nenhuma solicitação encontrada.';
-                listaCards.appendChild(mensagem);
-            }
         })
-        .catch(error => console.error('Erro ao carregar solicitações:', error));
+        .catch(error => console.error('Erro ao carregar competências:', error));
     };
+
+    // Função para adicionar competência selecionada
+    const adicionarCompetenciasMentor = () => {
+        const selectCompetencias = document.getElementById('selectCompetencias').value;
+
+        if (selectCompetencias) {
+            fetch('/api/adicionarCompetencia', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ competenciaId: selectCompetencias })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Competência selecionada:", data);
+                alert("Competência salva com sucesso!");
+                document.getElementById('modalCadastroCompetencias').style.display = "none";
+            })
+            .catch(error => {
+                console.error('Erro ao salvar competência:', error);
+            });
+        } else {
+            alert("Por favor, selecione uma competência.");
+        }
+    };
+
+    // Adicionar evento para salvar competência
+    const btnSalvarCompetencia = document.getElementById('btnAdicionarCompetencias');
+    if (btnSalvarCompetencia) {
+        btnSalvarCompetencia.addEventListener('click', adicionarCompetenciasMentor);
+    } else {
+        console.error('Botão "Adicionar Competências" não encontrado.');
+    }
 
     document.addEventListener("DOMContentLoaded", function() {
         const userEmail = sessionStorage.getItem('userEmail');
@@ -290,9 +232,8 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log('User email:', userEmail);
             // fetch(`/api/userData?email=${userEmail}`).then(...);
         }
-        
     });
-    
+
     // Modal Encerrar Conta
     var btnEncerrar = document.getElementById('btnEncerrar');
 
@@ -315,6 +256,6 @@ document.addEventListener("DOMContentLoaded", () => {
             .catch(error => console.error('Erro ao encerrar conta:', error));
         }
     });
-    
+
     //Fim do Modal Encerrar Conta
 });

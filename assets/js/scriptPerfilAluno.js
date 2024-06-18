@@ -3,36 +3,9 @@ document.addEventListener("DOMContentLoaded", function() {
     var avaliacao = document.getElementById('avaliacao');
     var nomeCompleto = document.getElementById('nomeCompleto');
 
-    /*
-    function fetchAvaliacao() {
-        fetch('/api/avaliacao')
-            .then(response => response.json())
-            .then(data => {
-                avaliacao.textContent = data.avaliacao;
-                console.log('Avaliação:', data.avaliacao);
-            })
-            .catch(error => console.error('Erro ao buscar avaliação:', error));
-    }
-
-    function fetchNomeCompleto() {
-        fetch('/api/nomeCompleto')
-            .then(response => response.json())
-            .then(data => {
-                nomeCompleto.textContent = data.nomeCompleto;
-                console.log('Nome Completo:', data.nomeCompleto);
-            })
-            .catch(error => console.error('Erro ao buscar nome completo:', error));
-    }
-
-    
-    fetchAvaliacao();
-    fetchNomeCompleto();*/
-    
-    
     var modals = {
         btnEditarInfo: 'modalEditarInfo',
         btnCadastroInteresses: 'modalCadastroInteresses',
-        btnRankingAlunos: 'modalRankingAlunos',
         btnEncerrarConta: 'modalEncerrarConta',
         btnProcurarMentor: 'modalProcuraMentor'
     };
@@ -44,11 +17,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
         btn.addEventListener('click', function() {
             modal.style.display = "block";
-            if (btnId === 'btnRankingAlunos') {
-                carregarRanking();
-            }else if(btnId === 'btnCadastroInteresses'){
+            if (btnId === 'btnCadastroInteresses') {
                 carregarInteresses();
-            }else if(btnId === 'btnProcurarMentor'){
+            } else if (btnId === 'btnProcurarMentor') {
                 resetarModalProcuraMentor();
             }
         });
@@ -201,33 +172,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     //Fim do modal Editar Informações
 
-    Object.keys(modals).forEach(function(btnId) {
-        var btn = document.getElementById(btnId);
-        var modal = document.getElementById(modals[btnId]);
-        var span = modal.getElementsByClassName("close")[0];
-
-        btn.addEventListener('click', function() {
-            modal.style.display = "block";
-            if (btnId === 'btnRankingAlunos') {
-                carregarRanking();
-            } else if (btnId === 'btnCadastroInteresses') {
-                carregarInteresses();
-            } else if (btnId === 'btnProcurarMentor') {
-                resetarModalProcuraMentor();
-            }
-        });
-
-        span.addEventListener('click', function() {
-            modal.style.display = "none";
-        });
-
-        window.addEventListener('click', function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        });
-    });
-
     // Modal Selecionar Interesses
     var btnSalvarInteresse = document.getElementById('btnSalvarInteresse');
 
@@ -261,38 +205,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
     //Fim do modal Selecionar Interesses
-
-
-    //Modal Ranking de Alunos
-    function carregarRanking() {
-        fetch('/ranking/mentorados')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Erro ao carregar ranking dos mentorados.');
-                }
-                return response.json();
-            })
-            .then((mentoradosData) => {
-                var rankingTable = document.getElementById('rankingTable').getElementsByTagName('tbody')[0];
-                rankingTable.innerHTML = "";
-
-                mentoradosData.forEach(function(entry, index) {
-                    var row = rankingTable.insertRow();
-                    var cellPosicao = row.insertCell(0);
-                    var cellNome = row.insertCell(1);
-                    var cellPontuacao = row.insertCell(2);
-
-                    cellPosicao.innerHTML = index + 1;
-                    cellNome.innerHTML = entry.nome;
-                    cellPontuacao.innerHTML = entry.pontuacao;
-                });
-            })
-            .catch(error => {
-                console.error('Erro ao carregar ranking:', error);
-        });
-    }
-
-    //Fim do modal Ranking de Alunos
 
     // Modal Encerrar Conta
     var btnEncerrar = document.getElementById('btnEncerrar');
