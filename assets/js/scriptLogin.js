@@ -129,12 +129,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    
-
     document.getElementById("btnFazLogin").addEventListener("click", () => {
         const emailLogin = document.getElementById("inputEmailLogin").value;
         const senhaLogin = document.getElementById("inputSenhaLogin").value;
-    
+
         if (validarEmail(emailLogin)) {
             fetch('/login', {
                 method: 'POST',
@@ -146,7 +144,6 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.json())
             .then(data => {
                 if (data.message === 'Login bem-sucedido') {
-                    sessionStorage.setItem('userEmail', emailLogin);  // Armazenar o email no SessionStorage
                     window.location.href = "escolherPerfil.html";
                 } else {
                     alert("Email ou senha incorretos");
@@ -157,5 +154,4 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Email inválido");
         }
     });
-    
 });
