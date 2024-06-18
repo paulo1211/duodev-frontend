@@ -140,15 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // document.getElementById("btnFazLogin").addEventListener("click", () => {
-       
-    //     let dadosLogin = {
-    //         email: document.getElementById("inputEmailLogin").value,
-    //         senha: document.getElementById("inputSenhaLogin").value,
-    //     };
 
-        
-    // });
 
     document.getElementById("btnFazLogin").addEventListener("click", () => {
 
