@@ -1,7 +1,26 @@
+var usuarioLogado = JSON.parse(sessionStorage.getItem('usuarioLogado'));
+
+function carregaUsuarioNovamente(){
+    fetch(`http://localhost:8080/usuario/${usuarioLogado.id}`)
+    .then(response => response.json())
+    .then(data => {
+        usuarioLogado = data;
+        console.log("Usuario carregado:", usuarioLogado);
+    })
+    .catch(error => {
+        console.error('Erro ao carregar usuário:', error);
+    });
+}
+
+carregaUsuarioNovamente();
+
+
 document.addEventListener("DOMContentLoaded", function() {
     
     var avaliacao = document.getElementById('avaliacao');
     var nomeCompleto = document.getElementById('nomeCompleto');
+
+    nomeCompleto.innerHTML = usuarioLogado.nome;
 
     var modals = {
         btnEditarInfo: 'modalEditarInfo',
@@ -37,18 +56,34 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
+    function carregarInteresses() {
+        fetch('http://localhost:8080/competencia')
+        .then(response => response.json())
+        .then(data => {
+            var selectInteresses = document.getElementById('selectInteresses');
+            selectInteresses.innerHTML = '';
+            data.forEach(function(item) {
+                var option = document.createElement('option');
+                option.value = item.id;
+                option.textContent = item.nome;
+                selectInteresses.appendChild(option);
+            }
+            );
+
+        })
+        .catch(error => console.error('Erro ao carregar interesses:', error));
+    }
+
     // Modal Editar Informações
 
     function carregaUsuario(){
-        const usuarioJSON = sessionStorage.getItem('usuario');
-        if (usuario) {
-            const usuario = JSON.parse(usuarioJSON);
-            document.getElementById('inputEmail').value = usuario.email || '';
-            document.getElementById('inputUsername').value = usuario.nome || '';
-            document.getElementById('inputNewPassword').value = usuario.senha || '';
-            document.getElementById('selectGenero').value = usuario.sexo || '';
-            document.getElementById('inputDataNascimento').value = usuario.dataNascimento || '';
-            document.getElementById("inputCPF").value.replace(/\D/g, '') = usuario.cpf || '';
+        if (usuarioLogado) {
+            document.getElementById('inputEmail').value = usuarioLogado.email || '';
+            document.getElementById('inputUsername').value = usuarioLogado.nome || '';
+            document.getElementById('inputNewPassword').value = usuarioLogado.senha || '';
+            document.getElementById('selectGenero').value = usuarioLogado.sexo || '';
+            document.getElementById('inputDataNascimento').value = usuarioLogado.dataNascimento || '';
+            document.getElementById("inputCPF").value = usuarioLogado.cpf || '';
         }else{
             alert("Usuario não logado");
         }
@@ -153,34 +188,70 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (valid) {
             var id
-            const usuarioJSON = sessionStorage.getItem('usuario');
-            if (usuarioJSON) {
-                const usuario = JSON.parse(usuarioJSON);
+            if (usuarioLogado) {
+                const usuario = usuarioLogado;
                 id = usuario.id;
             }else{
                 id = "";
             }
 
-            var queryString = queryParams.join('&');
-            var url = `/usuario/${id}?${queryString}`;
+            // var queryString = queryParams.join('&');
+            // console.log("Query string:", queryString);
+
+            usuario = {
+                email: email,
+                nome: username,
+                senha: newPassword,
+                sexo: genero,
+                dataNascimento: dataNascimento,
+                cpf: cpf
+            };
+
+            console.log("Usuario enviado:", usuario);
+
+            var url = `http://localhost:8080/usuario/${id}`;
 
             fetch(url, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(usuario)
+
             })
             .then(response => response.json())
             .then(data => {
+               // const parsedData = JSON.parse(data)
                 console.log("Dados atualizados:", data);
                 alert("Informações salvas com sucesso!");
                 document.getElementById('modalEditarInfo').style.display = "none";
+            
+    
             })
             .catch(error => {
                 console.error('Erro ao salvar informações:', error);
             });
         }
     });
+
+ 
+    function carregarCompetencias(){
+        fetch('http://localhost:8080/competencia')
+        .then(response => response.json())
+        .then(data => {
+            var selectCompetencias = document.getElementById('competencia');
+            selectCompetencias.innerHTML = '';
+            data.forEach(function(item) {
+                var option = document.createElement('option');
+                option.value = item.id;
+                option.textContent = item.nome;
+                selectCompetencias.appendChild(option);
+            }
+            );
+        })
+        .catch(error => console.error('Erro ao carregar competências:', error));
+    }
+    carregarCompetencias();
 
     function validarEmail(email) {
         var re = /^(([^<>()\[\]\.,;:\s@"]+(\.[^<>()\[\]\.,;:\s@"]+)*)|(".+"))@(([^<>()[\]\.,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,})$/i;
@@ -217,7 +288,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (selectInteresses) {
             
-            fetch('/competencia', {
+            fetch('http://localhost:8080/competencia', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -275,6 +346,11 @@ document.addEventListener("DOMContentLoaded", function() {
         var competencia = document.getElementById('competencia').value;
         var anosExperiencia = document.getElementById('anosExperiencia').value;
         
+ 
+        
+
+
+
         if (competencia && anosExperiencia) {
             console.log(`Procurando mentores para competência: ${competencia}, anos de experiência: ${anosExperiencia}`);
             

@@ -1,3 +1,9 @@
+var data = JSON.parse(sessionStorage.getItem('usuarioLogado'));
+
+nomeCompleto.innerHTML = data.nome;
+
+
+
 document.addEventListener("DOMContentLoaded", function() {
     var modals = {
         btnEditarInfo: 'modalEditarInfo',

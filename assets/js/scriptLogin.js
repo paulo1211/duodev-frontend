@@ -69,18 +69,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (validarEmail(email)) {
             try {
 
-                const requestBody = { email };
                 const response = await fetch(`http://localhost:8080/generateToken?email=${email}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(requestBody)
                 });
-                const data = await response.json();
+                const data = await response.text();
 
                 if (response.ok) {
-                    receivedCode = data.code; // Armazenar o código recebido do backend
+
+                    console.log('RETORNO BACKEND:', data);
+                    receivedCode = data; // Armazenar o código recebido do backend
                     console.log("Código recebido: " + receivedCode);
                     displayMessage("msg", "Código enviado para o email");
                     await pausa(3000);
@@ -99,19 +99,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     btnRedefinir.addEventListener("click", async () => {
-        const novaSenha = inputNovaSenha.value;
+        const senha = inputNovaSenha.value;
         const confirmarSenha = inputConfirmarSenha.value;
+        const email = document.getElementById('inputEmail').value;
 
-        if (validarSenha(novaSenha) && novaSenha === confirmarSenha) {
+        if (validarSenha(senha) && senha === confirmarSenha) {
+            console.log('Senha:', senha);
+            console.log('Confirmar senha:', confirmarSenha);
+            console.log('Email:', email);
+
+            dtoSenha = {
+                email: email,
+                senha: senha
+            };
+
             try {
-                const response = await fetch('/api/reset-password', {
+                const response = await fetch('http://localhost:8080/usuario/resetarSenha', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ newPassword: novaSenha })
+                    body: JSON.stringify(dtoSenha)
                 });
-                const data = await response.json();
+                const data = await response.text();
 
                 if (response.ok) {
                     displayMessage("msgRedefinir", "Senha redefinida com sucesso");
@@ -125,20 +135,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 displayMessage("msgRedefinir", "Erro ao redefinir a senha");
             }
         } else {
-            const message = !validarSenha(novaSenha) ? "A senha deve ter no mínimo 6 caracteres" : "Senhas não coincidem";
+            const message = !validarSenha(senha) ? "A senha deve ter no mínimo 6 caracteres" : "Senhas não coincidem";
             displayMessage("msgRedefinir", message);
         }
     });
 
-    document.getElementById("btnFazLogin").addEventListener("click", () => {
+    // document.getElementById("btnFazLogin").addEventListener("click", () => {
        
-        let dadosLogin = {
-            email: document.getElementById("inputEmailLogin").value,
-            senha: document.getElementById("inputSenhaLogin").value,
-        };
+    //     let dadosLogin = {
+    //         email: document.getElementById("inputEmailLogin").value,
+    //         senha: document.getElementById("inputSenhaLogin").value,
+    //     };
 
         
-    });
+    // });
 
     document.getElementById("btnFazLogin").addEventListener("click", () => {
 
@@ -158,16 +168,17 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then(response => {
                 if (response.ok) {
+                    //sessionStorage.setItem('usuarioLogado', dadosLogin);
                     return response.json();
-    
                 } else {
                     alert("Email ou senha incorretos");
                     throw new Error('Email ou senha incorretos');
                 }
             })
             .then(data => {
+                console.log('Sucesso:', data);
                 if (data !== null) {
-                    sessionStorage.setItem('userEmail', dadosLogin.email);  // Armazenar o email no SessionStorage
+                    sessionStorage.setItem('usuarioLogado', JSON.stringify(data));
                     window.location.href = "escolherPerfil.html";
                 } else {
                     alert("Email ou senha incorretos");

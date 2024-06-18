@@ -1,6 +1,14 @@
+var usuarioLogado = JSON.parse(sessionStorage.getItem('usuarioLogado'));
+
+console.log("USUARIO LOGADO", usuarioLogado);
+
 document.addEventListener("DOMContentLoaded", () => {
     var avaliacao = document.getElementById('avaliacao');
     var nomeCompleto = document.getElementById('nomeCompleto');
+
+    var btnSair = document.getElementById('btnLogOut');
+
+    nomeCompleto.innerHTML = usuarioLogado.nome;
     
     const modals = {
         btnEditarInfo: 'modalEditarInfo',
@@ -30,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 carregarCompetencias();
                 break;
             case 'btnSolicitacaoAluno':
-                carregarSolicitacoes();
+                ;
                 break;
             case 'btnEditarInfo':
                 carregaUsuario();
@@ -46,19 +54,23 @@ document.addEventListener("DOMContentLoaded", () => {
     var btnSalvar = document.getElementById('btnSalvar');
 
     function carregaUsuario(){
-        const usuarioJSON = sessionStorage.getItem('usuario');
-        if (usuarioJSON) {
-            const usuario = JSON.parse(usuarioJSON);
-            document.getElementById('inputEmail').value = usuario.email || '';
-            document.getElementById('inputUsername').value = usuario.nome || '';
-            document.getElementById('inputNewPassword').value = usuario.senha || '';
-            document.getElementById('selectGenero').value = usuario.sexo || '';
-            document.getElementById('inputDataNascimento').value = usuario.dataNascimento || '';
-            document.getElementById("inputCPF").value = usuario.cpf || '';
+        if (usuarioLogado) {
+         //   const usuario = JSON.parse(data);
+            document.getElementById('inputEmail').value = usuarioLogado.email || '';
+            document.getElementById('inputUsername').value = usuarioLogado.nome || '';
+            document.getElementById('inputNewPassword').value = usuarioLogado.senha || '';
+            document.getElementById('selectGenero').value = usuarioLogado.sexo || '';
+            document.getElementById('inputDataNascimento').value = usuarioLogado.dataNascimento || '';
+            document.getElementById("inputCPF").value = usuarioLogado.cpf || '';
         } else {
             alert("Usuário não logado");
         }
     }
+
+    btnSair.addEventListener('click', function() {
+        sessionStorage.clear();
+        window.location.href = "/index.html";
+    });
 
     
     btnSalvar.addEventListener('click', function() {
@@ -158,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (valid) {
             var id
-            const usuarioJSON = sessionStorage.getItem('usuario');
+            const usuarioJSON = sessionStorage.getItem('usuarioLogado');
             if (usuarioJSON) {
                 const usuario = JSON.parse(usuarioJSON);
                 id = usuario.id;
@@ -216,7 +228,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Modal Selecionar Competências
     const carregarCompetencias = () => {
-        fetch('/competencias', {
+        fetch('http://localhost:8080/competencia', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -280,12 +292,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Modal Encerrar Conta
-    var btnEncerrar = document.getElementById('btnEncerrar');
+    var btnEncerrar = document.getElementById('btnEncerrarConta');
 
     btnEncerrar.addEventListener('click', function() {
         var confirmacao = confirm("Tem certeza de que deseja encerrar sua conta?");
         if (confirmacao) {
-            fetch('/api/encerrarConta', {
+            fetch(`http://localhost:8080/usuario/${usuarioLogado.id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
