@@ -1,334 +1,392 @@
 body.aluno-main {
-    margin: 0;
-    background-color: #0a4060;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow-x: hidden;
-    font-family: "Rubik", sans-serif !important;
-    font-optical-sizing: auto;
-    font-weight: bold;
-    font-style: normal;
+  margin: 0;
+  background-color: #0a4060;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+  font-family: "Rubik", sans-serif !important;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  font-style: normal;
 }
 
 .aluno {
-    text-align: center;
+  text-align: center;
 }
 
 .aluno .user {
-    background-color: white;
-    border-radius: 50%;
-    width: 8rem;
-    height: 8rem;
-    font-size: 4rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 4rem auto 0;
+  background-color: white;
+  border-radius: 50%;
+  width: 8rem;
+  height: 8rem;
+  font-size: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 4rem auto 0;
 }
 
 .aluno h3 {
-    color: white;
-    margin-bottom: 1rem;
+  color: white;
+  margin-bottom: 1rem;
 }
 
 .aluno .btns {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
 }
 
 .btns-container {
-    margin-bottom: 1rem;
-    padding: 3rem;
-    background-color: #eaf0f8;
-    box-shadow: 0 5px 40px rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
-    color: #0a4060;
+  margin-bottom: 1rem;
+  padding: 3rem;
+  background-color: #eaf0f8;
+  box-shadow: 0 5px 40px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  color: #0a4060;
 }
 
 .aluno button {
-    width: 100%;
-    max-width: 20rem;
-    height: 5rem;
-    margin-top: 0.5rem;
-    color: white;
-    background: linear-gradient(90deg, #0a4060, #17d7da);
-    padding: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-    border: none;
-    cursor: pointer;
-    border-radius: 20px;
-    transition: background 0.3s ease;
+  width: 100%;
+  max-width: 20rem;
+  height: 5rem;
+  margin-top: 0.5rem;
+  color: white;
+  background: linear-gradient(90deg, #0a4060, #17d7da);
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: background 0.3s ease;
 }
 
 button.encerrar {
-    background: rgb(83, 0, 0);
+  background: rgb(83, 0, 0);
 }
 
 @media (max-width: 992px) {
-    .aluno .btns {
-        grid-template-columns: repeat(1, 1fr);
-    }
+  .aluno .btns {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
-#divAvaliacao{
-    margin-top: 10px;
+#divAvaliacao {
+  margin-top: 10px;
 }
 
-#divNomePerfil{
-    margin-top: 2rem;
+#divNomePerfil {
+  margin-top: 2rem;
 }
 
 .containerCentraliza {
-    display: flex;
-    justify-content: center;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
-.centraliza{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
+.centraliza {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .btnGeral {
-    width: 80%;
-    margin-top: 30px;
-    color: #eaf0f8;
-    font-weight: bolder;
-    text-shadow: 0px 2px 5px rgb(0, 0, 0, 0.5);
-    background: linear-gradient(90deg, #0a4060, #17d7da) ;
-    padding: 10px;
-    box-shadow: 0px 2px 5px rgb(0, 0, 0, 0.5);
-    border: none;
-    cursor: pointer;
-    border-radius: 20px;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    -ms-border-radius: 20px;
-    -o-border-radius: 20px;
+  width: 80%;
+  margin-top: 30px;
+  color: #eaf0f8;
+  font-weight: bolder;
+  text-shadow: 0px 2px 5px rgb(0, 0, 0, 0.5);
+  background: linear-gradient(90deg, #0a4060, #17d7da);
+  padding: 10px;
+  box-shadow: 0px 2px 5px rgb(0, 0, 0, 0.5);
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
 }
 
 .btnGeral:hover {
-    box-shadow: 0px 2px 5px rgb(0, 0, 0, 1);
+  box-shadow: 0px 2px 5px rgb(0, 0, 0, 1);
 }
 
-.btnInteresses{
-    width: 70%;
-    margin-top: 20px;
-    color: #eaf0f8;
-    font-weight: bolder;
-    text-shadow: 0px 2px 5px rgb(0, 0, 0, 0.5);
-    background: #0a4060;
-    padding: 10px;
-    box-shadow: 0px 2px 5px rgb(0, 0, 0, 0.5);
-    border: none;
-    cursor: pointer;
-    border-radius: 20px;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    -ms-border-radius: 20px;
-    -o-border-radius: 20px;
+.btnInteresses {
+  width: 70%;
+  margin-top: 20px;
+  color: #eaf0f8;
+  font-weight: bolder;
+  text-shadow: 0px 2px 5px rgb(0, 0, 0, 0.5);
+  background: #0a4060;
+  padding: 10px;
+  box-shadow: 0px 2px 5px rgb(0, 0, 0, 0.5);
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
 }
 
 .btnInteresses.selected {
-    background-color: #17d7da;
-    color: black;
-    border: none;
+  background-color: #17d7da;
+  color: black;
+  border: none;
 }
 
 .interesse {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    justify-items: center;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  justify-items: center;
 }
 
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modal-content {
-    position: relative;
-    background-color: #eaf0f8;
-    margin: 5% auto;
-    padding: 20px 50px;
-    border-radius: 20px;
-    width: 80%;
-    max-width: 600px;
+  position: relative;
+  background-color: #eaf0f8;
+  margin: 5% auto;
+  padding: 20px 50px;
+  border-radius: 20px;
+  width: 80%;
+  max-width: 600px;
 }
 
 .inputGeral {
-    width: 50%;
-    background-color: white;
-    font-family: "Rubik", sans-serif;
-    font-weight: bold;
-    font-size: small;
-    color: #0a4060;
-    border: 2px solid #0a4060;
-    margin: 10px 0;
-    padding: 7px;
-    outline: none;
-    box-shadow: 0px 2px 5px rgb(0, 0, 0, 0.5);
-    border-radius: 10px;
+  width: 50%;
+  background-color: white;
+  font-family: "Rubik", sans-serif;
+  font-weight: bold;
+  font-size: small;
+  color: #0a4060;
+  border: 2px solid #0a4060;
+  margin: 10px 0;
+  padding: 7px;
+  outline: none;
+  box-shadow: 0px 2px 5px rgb(0, 0, 0, 0.5);
+  border-radius: 10px;
 }
 
-.inputGeral:focus, .inputGeral:hover {
-    border: 2px solid #17d7da;
+.inputGeral:focus,
+.inputGeral:hover {
+  border: 2px solid #17d7da;
 }
 
 .inputInvalidado {
-    border: 2px solid red;
+  border: 2px solid red;
 }
 
 .tituloModal {
-    color: #0a4060;
+  color: #0a4060;
 }
 
 .optSel {
-    background-color: #eaf0f8;
+  background-color: #eaf0f8;
 }
 
 .selected {
-    border: 2px solid lightblue;
+  border: 2px solid lightblue;
 }
 
-
-
-
 .close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    color: #aaa;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .close:hover,
 .close:focus {
-    color: black;
-    text-decoration: none;
+  color: black;
+  text-decoration: none;
 }
 
 .calendar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .month {
-    display: none;
+  display: none;
 }
 .month.active {
-    display: block;
+  display: block;
 }
 .month .days {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .month .days button {
-    margin: 5px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    background-color: #f1f1f1;
-    cursor: pointer;
+  margin: 5px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  cursor: pointer;
 }
 .month .days button.selected {
-    border-color: #00f;
-    background-color: #ccf;
+  border-color: #00f;
+  background-color: #ccf;
 }
 .tabs {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
 }
 .tabs button {
-    margin: 0 5px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    background-color: #f1f1f1;
-    cursor: pointer;
+  margin: 0 5px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  cursor: pointer;
 }
 .tabs button.active {
-    background-color: #ccc;
+  background-color: #ccc;
 }
 
 #rankingTable {
-    width: 100%;
-    margin: 20px 0;
-    font-size: 18px;
-    text-align: left;
+  width: 100%;
+  margin: 20px 0;
+  font-size: 18px;
+  text-align: left;
 }
 
-#rankingTable th, #rankingTable td {
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
+#rankingTable th,
+#rankingTable td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
 }
 
 #rankingTable tr:nth-child(even) {
-    background-color: #0a4060;
-    color: white;
+  background-color: #0a4060;
+  color: white;
 }
 
 #rankingTable tbody tr:last-child td {
-    border-bottom: none; 
+  border-bottom: none;
 }
 
 #rankingTable tbody tr:first-child td:first-child {
-    border-top-left-radius: 10px; 
+  border-top-left-radius: 10px;
 }
 
 #rankingTable tbody tr:first-child td:last-child {
-    border-top-right-radius: 10px; 
+  border-top-right-radius: 10px;
 }
 
 #rankingTable tbody tr:last-child td:first-child {
-    border-bottom-left-radius: 10px; 
+  border-bottom-left-radius: 10px;
 }
 
 #rankingTable tbody tr:last-child td:last-child {
-    border-bottom-right-radius: 10px; 
+  border-bottom-right-radius: 10px;
 }
 
-#resultadosBusca{
-    display: none;
+#resultadosBusca {
+  display: none;
 }
 
-.listaCards { 
-    display: flex; 
-    flex-wrap: wrap; 
+.listaCards {
+  display: flex;
+  flex-wrap: wrap;
 }
 .card {
-    border: 3px solid #0a4060;
-    padding: 16px;
-    margin: 8px;
-    width: 80%;
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    -o-border-radius: 10px;
+  border: 3px solid #0a4060;
+  padding: 16px;
+  margin: 8px;
+  width: 80%;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
 }
 
-.card a{
-    font-size: small;
+.card a {
+  font-size: small;
 }
 
-#divSelecionarHorarioMentor{
-    display: none;
+#divSelecionarHorarioMentor {
+  display: none;
+}
+
+#divSwitchSenha {
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+}
+
+#labelSwitch {
+  margin-top: 1px;
+  color: #0a4060;
+  font-size: small;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 34px;
+  height: 20px;
+  margin-left: -5px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 20px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: #17d7da;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #0a4060;
+}
+
+input:checked + .slider:before {
+  transform: translateX(14px);
 }

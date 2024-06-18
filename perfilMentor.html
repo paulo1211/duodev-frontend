@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Perfil Mentor - Duodev</title>
@@ -28,149 +28,170 @@
       referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="assets/css/estiloPerfilMentor.css" />
-</head>
-<body class="mentor-main">
-<main class="mentor">
-    <div class="user">
+  </head>
+  <body class="mentor-main">
+    <main class="mentor">
+      <div class="user">
         <i class="fa-regular fa-user"></i>
-    </div>
-    <div id="divAvaliacao">
-        <h3 id="avalicao">5/5</h3>
-    </div>
-    <div id="divNomePerfil">
+      </div>
+      <div id="divNomePerfil">
         <h3 id="nomeCompleto">Nome Completo</h3>
         <h3>Mentor</h3>
-    </div>
-    <div class="btns-container">
+      </div>
+      <div class="btns-container">
         <div class="btns">
-            <button id="btnEditarInfo">Editar informações pessoais</button>
-            <button id="btnCadastroCompetencias">Cadastro de competências</button>
-            <button id="btnSolicitacaoAluno">Abrir Solicitação de Aluno</button>
-            <button id="btnLogOut">Sair</button>
+          <button id="btnEditarInfo">Editar informações pessoais</button>
+          <button id="btnCadastroCompetencias">Cadastro de competências</button>
+          <button id="btnSolicitacaoAluno">Abrir Solicitação de Aluno</button>
+          <button id="btnTrocaPerfil">Trocar para Aluno</button>
+          <button id="btnLogOut">Sair</button>
+          <button id="btnEncerrarConta" class="encerrar">Encerrar conta</button>
         </div>
-        <button id="btnEncerrarConta" class="encerrar">Encerrar conta</button>
+      </div>
+    </main>
+
+    <!-- Modais -->
+    <div id="modalEditarInfo" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="centraliza">
+          <h2 class="tituloModal">Editar informações</h2>
+        </div>
+
+        <div class="centraliza">
+          <input
+            type="email"
+            placeholder="exemplo@exemplo.com"
+            class="inputGeral"
+            id="inputEmail"
+          />
+          <input
+            type="text"
+            placeholder="Nome completo"
+            class="inputGeral"
+            id="inputUsername"
+          />
+          <input
+            type="date"
+            class="inputGeral"
+            placeholder="Data de Nascimento"
+            id="inputDataNascimento"
+          />
+          <input
+            type="text"
+            class="inputGeral"
+            placeholder="CPF"
+            id="inputCPF"
+          />
+          <input
+            type="password"
+            placeholder="Nova senha"
+            class="inputGeral"
+            id="inputNewPassword"
+          />
+          <div id="divSwitchSenha">
+            <label class="switch">
+              <input type="checkbox" id="showPassword" />
+              <span class="slider round"></span>
+            </label>
+            <span id="labelSwitch">Mostrar Senha</span>
+          </div>
+          <input
+            type="password"
+            placeholder="Confirmar nova senha"
+            class="inputGeral"
+            id="inputConfirmPassword"
+          />
+          <select class="inputGeral" id="selectGenero">
+            <option value="" class="optSel">Selecione seu gênero</option>
+            <option value="MASCULINO" class="optSel">Masculino</option>
+            <option value="FEMININO" class="optSel">Feminino</option>
+            <option value="NAO_BINARIO" class="optSel">Não Binário</option>
+            <option value="OUTRO" class="optSel">Outro</option>
+            <option value="PREFIRO_NAO_DECLARAR" class="optSel">
+              Prefiro não informar
+            </option>
+          </select>
+        </div>
+
+        <div class="btn-container">
+          <button class="btnGeral" id="btnSalvar">SALVAR</button>
+        </div>
+      </div>
     </div>
-</main>
 
-<!-- Modais -->
-<div id="modalEditarInfo" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <div class="centraliza"><h2 class="tituloModal">Editar informações</h2></div>
-    
-    <div class="centraliza">
-      <input
-      type="email"
-      placeholder="exemplo@exemplo.com"
-      class="inputGeral"
-      id="inputEmail"
-    />
-    <input
-      type="text"
-      placeholder="Nome completo"
-      class="inputGeral"
-      id="inputUsername"
-    />
-    <input type="date" class="inputGeral" placeholder="Data de Nascimento" id="inputDataNascimento">
-    <input type="text" class="inputGeral" placeholder="CPF" id="inputCPF">
-    <input
-      type="password"
-      placeholder="Nova senha"
-      class="inputGeral"
-      id="inputNewPassword"
-    />
-    <input
-      type="password"
-      placeholder="Confirmar nova senha"
-      class="inputGeral"
-      id="inputConfirmPassword"
-    />
-    <select class="inputGeral" id="selectGenero">
-      <option value="" class="optSel">Selecione seu gênero</option>
-      <option value="MASCULINO" class="optSel">Masculino</option>
-      <option value="FEMININO" class="optSel">Feminino</option>
-      <option value="NAO_BINARIO" class="optSel">Não Binário</option>
-      <option value="OUTRO" class="optSel">Outro</option>
-      <option value="PREFIRO_NAO_DECLARAR" class="optSel">
-        Prefiro não informar
-      </option>
-    </select>
+    <div id="modalCadastroCompetencias" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="centraliza">
+          <h2 class="tituloModal">Selecione suas competências</h2>
+        </div>
+        <div class="competencias centraliza" id="competenciasContainer">
+          <select id="selectCompetencias" class="inputGeral">
+            <option value="">Selecione uma competência</option>
+            <option value="Java">Java</option>
+            <option value="JavaScript">JavaScript</option>
+            <option value="C++">C++</option>
+            <option value="C#">C#</option>
+            <option value="Python">Python</option>
+          </select>
+        </div>
+        <div class="btn-container">
+          <button class="btnGeral" id="btnAdicionarCompetencias">
+            Adicionar competência
+          </button>
+        </div>
+      </div>
     </div>
-    
-    
-    <div class="btn-container">
-      <button class="btnGeral" id="btnSalvar">SALVAR</button>
+
+    <div id="modalRankingMentores" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 class="tituloModal">Ranking dos mentores</h2>
+        <table class="ranking-table" id="rankingTable">
+          <thead>
+            <tr>
+              <th>Posição</th>
+              <th>Nome</th>
+              <th>Avaliação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Linhas de ranking serão carregadas dinamicamente -->
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
-</div>
 
-<div id="modalCadastroCompetencias" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <div class="centraliza"><h2 class="tituloModal">Selecione suas competências</h2></div>
-    <div class="competencias centraliza" id="competenciasContainer">
-      <select id="selectCompetencias" class="inputGeral">
-        <option value="">Selecione uma competência</option>
-        <option value="Java">Java</option>
-        <option value="JavaScript">JavaScript</option>
-        <option value="C++">C++</option>
-        <option value="C#">C#</option>
-        <option value="Python">Python</option>
-      </select>
+    <div id="modalSolicitacaoAluno" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 class="tituloModal">Solicitação de Aluno</h2>
+        <a
+          >Para confirmar uma solicitação de mentoria<br />acesse o seu
+          e-mail</a
+        >
+        <div class="listaCards">
+          <!-- Os cartões serão adicionados dinamicamente aqui -->
+        </div>
+      </div>
     </div>
-    <div class="btn-container">
-      <button class="btnGeral" id="btnAdicionarCompetencias">Adicionar competência</button>
+
+    <div id="modalEncerrarConta" class="modal">
+      <div class="modal-content centraliza">
+        <span class="close">&times;</span>
+        <h2 class="tituloModal">Encerrar conta</h2>
+        <p>Tem certeza que vai nos deixar? ;-;</p>
+        <button class="btnGeral encerrar">ENCERRAR</button>
+      </div>
     </div>
-  </div>
-</div>
 
-<div id="modalRankingMentores" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2 class="tituloModal">Ranking dos mentores</h2>
-    <table class="ranking-table" id="rankingTable">
-      <thead>
-        <tr>
-          <th>Posição</th>
-          <th>Nome</th>
-          <th>Avaliação</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Linhas de ranking serão carregadas dinamicamente -->
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<div id="modalSolicitacaoAluno" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2 class="tituloModal">Solicitação de Aluno</h2>
-    <a>Para confirmar uma solicitação de mentoria<br>acesse o seu e-mail</a>
-    <div class="listaCards">
-      <!-- Os cartões serão adicionados dinamicamente aqui -->
-    </div>
-  </div>
-</div>
-
-
-
-<div id="modalEncerrarConta" class="modal">
-  <div class="modal-content centraliza">
-    <span class="close">&times;</span>
-    <h2 class="tituloModal">Encerrar conta</h2>
-    <p>Tem certeza que vai nos deixar? ;-;</p>
-    <button class="btnGeral encerrar">ENCERRAR</button>
-  </div>
-</div>
-
-<script
-    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
-    integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-></script>
-<script src="assets/js/scriptPerfilMentor.js"></script>
-</body>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
+      integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="assets/js/scriptPerfilMentor.js"></script>
+  </body>
 </html>
