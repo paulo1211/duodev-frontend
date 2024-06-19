@@ -297,13 +297,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const selectCompetencias =
       document.getElementById("selectCompetencias").value;
 
+    const anosXP = document.getElementById("inputAnosDeXP").value;
+
     if (selectCompetencias) {
       fetch("/api/adicionarCompetencia", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ competenciaId: selectCompetencias }),
+        body: JSON.stringify({ competenciaId: selectCompetencias, anosExperiencia: anosXP }),
       })
         .then((response) => response.json())
         .then((data) => {
