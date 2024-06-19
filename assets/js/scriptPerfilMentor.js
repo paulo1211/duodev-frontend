@@ -6,12 +6,15 @@ console.log("USUARIO LOGADO", usuarioLogado);
 document.addEventListener("DOMContentLoaded", () => {
   const SwitchMostraSenha = document.getElementById("showPassword");
   const inputSenha = document.getElementById("inputNewPassword");
+  const inputConfirmaSenha = document.getElementById("inputConfirmPassword");
 
   SwitchMostraSenha.addEventListener("change", () => {
     if (SwitchMostraSenha.checked) {
       inputSenha.type = "text";
+      inputConfirmaSenha.type = "text";
     } else {
       inputSenha.type = "password";
+      inputConfirmaSenha.type = "password";
     }
   });
   var nomeCompleto = document.getElementById("nomeCompleto");
