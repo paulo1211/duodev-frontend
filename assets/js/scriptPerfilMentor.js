@@ -299,13 +299,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const anosXP = document.getElementById("inputAnosDeXP").value;
 
+    console.log("Competência selecionada:", selectCompetencias);
+    console.log("Anos de experiência:", anosXP);
+    console.log("Usuário logado:", usuarioLogado.id);
+
+    competenciaMentor = {
+      usuarioId: usuarioLogado.id,
+      competenciaId: selectCompetencias,
+      anosExperiencia: anosXP,
+    };
+
     if (selectCompetencias) {
-      fetch("/api/adicionarCompetencia", {
+      fetch("http://localhost:8080/usuario-competencia/single", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ competenciaId: selectCompetencias, anosExperiencia: anosXP }),
+        body: JSON.stringify(competenciaMentor),
       })
         .then((response) => response.json())
         .then((data) => {
