@@ -15,8 +15,10 @@ document.addEventListener("DOMContentLoaded", function () {
   switchMostraSenha.addEventListener("change", () => {
     if (switchMostraSenha.checked) {
       inputs.senha.type = "text";
+      inputs.confirmarSenha.type = "text";
     } else {
       inputs.senha.type = "password";
+      inputs.confirmarSenha.type = "password";
     }
   });
 

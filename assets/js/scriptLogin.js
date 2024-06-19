@@ -10,6 +10,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  const mostraSenhaRedefinir = document.getElementById("showPassword2");
+  
+
   const modal = document.getElementById("modalEsqSenha");
   const btnEmail = document.getElementById("btnGerarEmail");
   const btnCod = document.getElementById("btnVerCod");
@@ -19,6 +22,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const inputConfirmarSenha = document.getElementById("inputConfirmarSenha");
   const closeBtns = document.querySelectorAll(".close");
   let receivedCode = null;
+
+  mostraSenhaRedefinir.addEventListener("change", () => {
+    if (mostraSenhaRedefinir.checked) {
+      inputNovaSenha.type = "text";
+      inputConfirmarSenha.type = "text";
+    } else {
+      inputNovaSenha.type = "password";
+      inputConfirmarSenha.type = "password";
+    }
+  });
+
 
   const abrirModalEsqSenha = () => {
     modal.style.display = "block";
