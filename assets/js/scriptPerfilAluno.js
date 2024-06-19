@@ -563,6 +563,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     sessionStorage.setItem("usuarioLogado", JSON.stringify(usuarioLogado2));
 
-    window.location.href = "perfilAluno.html";
+    window.location.href = "perfilMentor.html";
   });
 });
