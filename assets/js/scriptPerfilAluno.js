@@ -12,17 +12,18 @@ function carregaUsuarioNovamente() {
     });
 }
 
-carregaUsuarioNovamente();
-
 document.addEventListener("DOMContentLoaded", function () {
   const SwitchMostraSenha = document.getElementById("showPassword");
   const inputSenha = document.getElementById("inputNewPassword");
+  const inputConfirmaSenha = document.getElementById("inputConfirmPassword");
 
   SwitchMostraSenha.addEventListener("change", () => {
     if (SwitchMostraSenha.checked) {
       inputSenha.type = "text";
+      inputConfirmaSenha.type = "text";
     } else {
       inputSenha.type = "password";
+      inputConfirmaSenha.type = "password";
     }
   });
   var nomeCompleto = document.getElementById("nomeCompleto");
@@ -248,6 +249,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .then((response) => response.json())
         .then((data) => {
           // const parsedData = JSON.parse(data)
+          carregaUsuarioNovamente();
           console.log("Dados atualizados:", data);
           alert("Informações salvas com sucesso!");
           document.getElementById("modalEditarInfo").style.display = "none";
