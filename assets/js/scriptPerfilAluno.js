@@ -319,13 +319,22 @@ document.addEventListener("DOMContentLoaded", function () {
   btnSalvarInteresse.addEventListener("click", function () {
     var selectInteresses = document.getElementById("selectInteresses").value;
 
+    console.log("Interesse selecionado:", selectInteresses);
+    console.log("Usuario logado ID:", usuarioLogado.id);
+
+    interesseUsuario = { 
+      usuarioId: usuarioLogado.id,    
+      competenciaId: selectInteresses,
+    };
+
+
     if (selectInteresses) {
-      fetch("http://localhost:8080/competencia", {
+      fetch("http://localhost:8080/usuario-area-interesse/single", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ interesse: selectInteresses }),
+        body: JSON.stringify(interesseUsuario),
       })
         .then((response) => response.json())
         .then((data) => {
