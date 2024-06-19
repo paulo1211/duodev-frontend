@@ -121,13 +121,12 @@ document.addEventListener("DOMContentLoaded", function () {
       nome: inputs.nome.value,
       email: inputs.email.value,
       senha: inputs.senha.value,
-      confirmarSenha: inputs.confirmarSenha.value,
       cpf: inputs.cpf.value,
       sexo: inputs.genero.value,
       dataNascimento: inputs.dataNascimento.value,
     };
 
-    fetch("/usuario", {
+    fetch("http://localhost:8080/usuario", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(dados),
