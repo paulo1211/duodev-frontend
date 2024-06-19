@@ -1,6 +1,28 @@
 //
 var usuarioLogado = JSON.parse(sessionStorage.getItem("usuarioLogado"));
 
+
+function carregaUsuarioNovamente() {
+  
+  fetch(`http://localhost:8080/usuario/${usuarioLogado.id}`)
+    .then((response) => response.json())
+    .then((data) => {
+      usuarioLogado = data;
+      var nomeCompleto = document.getElementById("nomeCompleto");
+      
+      console.log("PEGANDO SO O NOME:", usuarioLogado.nome);
+      nomeCompleto.innerHTML = usuarioLogado.nome;
+      console.log("Usuario carregado ATUALIZADO:", usuarioLogado);
+    })
+    .catch((error) => {
+      console.error("Erro ao carregar usuário:", error);
+    });
+
+
+  }
+
+  carregaUsuarioNovamente();
+
 console.log("USUARIO LOGADO", usuarioLogado);
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -211,17 +233,30 @@ document.addEventListener("DOMContentLoaded", () => {
         id = "";
       }
 
-      var queryString = queryParams.join("&");
-      var url = `/usuario/${id}?${queryString}`;
+      usuario = {
+        email: email,
+        nome: username,
+        senha: newPassword,
+        sexo: genero,
+        dataNascimento: dataNascimento,
+        cpf: cpf,
+      };
+
+      console.log("Usuario enviado:", usuario);
+
+      var url = `http://localhost:8080/usuario/${id}`;
 
       fetch(url, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify(usuario),
       })
         .then((response) => response.json())
         .then((data) => {
+          // const parsedData = JSON.parse(data)
+          carregaUsuarioNovamente();
           console.log("Dados atualizados:", data);
           alert("Informações salvas com sucesso!");
           document.getElementById("modalEditarInfo").style.display = "none";

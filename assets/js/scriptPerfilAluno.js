@@ -1,16 +1,27 @@
 var usuarioLogado = JSON.parse(sessionStorage.getItem("usuarioLogado"));
 
 function carregaUsuarioNovamente() {
+  
   fetch(`http://localhost:8080/usuario/${usuarioLogado.id}`)
     .then((response) => response.json())
     .then((data) => {
       usuarioLogado = data;
-      console.log("Usuario carregado:", usuarioLogado);
+      var nomeCompleto = document.getElementById("nomeCompleto");
+      
+      console.log("PEGANDO SO O NOME:", usuarioLogado.nome);
+      nomeCompleto.innerHTML = usuarioLogado.nome;
+      console.log("Usuario carregado ATUALIZADO:", usuarioLogado);
     })
     .catch((error) => {
       console.error("Erro ao carregar usuário:", error);
     });
-}
+
+
+  }
+
+  carregaUsuarioNovamente();
+
+var nomeCompleto = document.getElementById("nomeCompleto");
 
 document.addEventListener("DOMContentLoaded", function () {
   const SwitchMostraSenha = document.getElementById("showPassword");
